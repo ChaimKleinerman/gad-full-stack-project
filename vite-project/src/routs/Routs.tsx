@@ -4,47 +4,56 @@ import Home from "../components/Home";
 import Categories from "../components/Categories";
 import Product from "../components/Product";
 import Cart from "../components/Cart";
-
-import ProductPage from "../components/productPage";
-import { CompareProducts } from "../components/ComparePage";
-
+import StatusLogsAndCart from "../components/StatusLogsAndCart";
+import Categories5 from "../components/homePage/Categories5";
+import CategoriesLinks from "../components/homePage/CategoriesLinks";
+import ShoppingCart from "../components/ShoppingCart";
+import Prod5 from "../components/homePage/Prod5";
 export default function Routs() {
     const router = createBrowserRouter([
         {
             path: "/",
             element: (
-                    <Home />
+                <>
+                    <StatusLogsAndCart />
+                    <CategoriesLinks />
+                    <Categories5 />
+                    <Prod5 />
+                </>
             ),
             errorElement: <ErrorPage />,
         },
         {
-          path:"/categories/:category",
-          element:(
-              <Categories/>
-          ), 
-          errorElement: <ErrorPage/>, 
-        },
-        {
-            path:"/product/:id",
-            element:(
-                <ProductPage/>
+            path: "/categories/:category",
+            element: (
+                <>
+                    <StatusLogsAndCart />
+                    <Categories />
+                </>
             ),
-                errorElement: <ErrorPage/>,
+            errorElement: <ErrorPage />,
         },
         {
-            path:"/cart",
-            element:(
-                <Cart/>
+            path: "/product/:id",
+            element: (
+                <>
+                    <StatusLogsAndCart />
+                    <Product />
+                </>
             ),
-            errorElement: <ErrorPage/>
+            errorElement: <ErrorPage />,
         },
         {
-           path: "/compare",
-           element:(
-                <CompareProducts/>
-           )
+            path: "/cart",
+            element: (
+                <>
+                    <StatusLogsAndCart />
+                    <ShoppingCart />
+                </>
+            ),
+            errorElement: <ErrorPage />
         }
-        
+
     ]);
 
     return <RouterProvider router={router} />;
