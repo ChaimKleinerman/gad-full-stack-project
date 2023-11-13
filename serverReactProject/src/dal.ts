@@ -10,7 +10,7 @@ connectToDb();
 
 //gat all products
 const dal_allData = async () => {
-    const data = await productModel.find({}).exec();
+    const data = await productModel.find({}).sort({"timeChosen":1}).exec();
     if (!data) {
         throw new Err(500, "the get all been filed");
     }
@@ -18,7 +18,7 @@ const dal_allData = async () => {
 };
 //get all categories
 const dal_allCategories = async () => {
-    const categories = await CategoryModel.find({}).exec();
+    const categories = await CategoryModel.find({}).sort({"timeChosen":1}).exec();
     if (!categories) {
         throw new Err(500, "the get all categories been filed");
     }
@@ -43,7 +43,7 @@ const dal_dataByCategory = async (category: string) => {
     if (!incrementChosenCategory) {
         throw new Err(500, "the increment been filed");
     }
-    console.log('sccess');
+    
     
     console.log(incrementChosenCategory);
     return dataByCategory;
