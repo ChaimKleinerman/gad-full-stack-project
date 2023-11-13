@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { set } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import CustomizedTables from "./mui/tableCategories";
+import ProductsCategory from "./ProductsCategory";
 
 export default function Categories() {
     const { category } = useParams();
     console.log(category);
-
+const [filter, setFilter] = useState<string>('')
+const [filterType, setFilterType] = useState<"brand" | "price" | "rating" | "discountPercentage">('brand')
 const [products, setProducts] = useState([]);
     useEffect(() => {
        
@@ -45,7 +47,8 @@ const [products, setProducts] = useState([]);
 
     return (
         <>
-        <CustomizedTables products = {products}/>
+        <CustomizedTables products = {products} setFilter = {setFilter} setFilterType = {setFilterType}/>
+        <ProductsCategory products = {products} filter = {filter} filterType= {filterType}/>
         </>
     )
 }

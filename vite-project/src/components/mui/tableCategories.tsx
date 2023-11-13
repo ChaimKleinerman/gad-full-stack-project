@@ -8,12 +8,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Product } from "../../types";
+import { Dispatch } from "react";
 
 interface Props {
     products: Product[];
+    setFilter:Dispatch<React.SetStateAction<string>>
+    setFilterType:Dispatch<React.SetStateAction<"brand" | "price" | "rating" | "discountPercentage">>
 }
 
-export default function CustomizedTables({ products }: Props) {
+export default function CustomizedTables({ products,setFilter,setFilterType}: Props) {
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: theme.palette.common.black,
@@ -43,7 +46,7 @@ export default function CustomizedTables({ products }: Props) {
         return { brand, price, rating, discountPercentage };
     }
     function createRows(products: Product[]) {
-        const price = ["until 100","100-500","500-1000","1000-5000",'','','','','','','','']
+        const price = ["0-100","100-500","500-1000","1000-5000",'','','','','','','','']
         const rating = ["1-2","2-3","3-4","4-5",'','','','','','','','']
         const discountPercentage = ["0-10","10-20","20-30","30-40","40-50","50-60","60-70","70-80","80-90","90-100"]
         const brands:string[] = [];
@@ -85,17 +88,17 @@ export default function CustomizedTables({ products }: Props) {
                 <TableBody>
                     {rows.map((row) => (
                         <StyledTableRow key={row?.brand}>
-                        <StyledTableCell component="th" scope="row">
+                     <StyledTableCell component="th" scope="row" onClick={()=>{setFilter(row?.brand),setFilterType('brand')}}>
                                 {row?.brand}
                             </StyledTableCell>
-                            <StyledTableCell component="th" scope="row">
+                            <StyledTableCell component="th" scope="row" onClick={()=>{setFilter(row?.price),setFilterType('price')}}>
                                 {row?.price}
                             </StyledTableCell>
-                            <StyledTableCell align="right">
-                                {row?.discountPercentage}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">
+                            <StyledTableCell align="right" onClick={()=>{setFilter(row?.rating),setFilterType('rating')}}>
                                 {row?.rating}
+                            </StyledTableCell>
+                            <StyledTableCell align="right" onClick={()=>{setFilter(row?.discountPercentage),setFilterType('discountPercentage')}}>
+                                {row?.discountPercentage}
                             </StyledTableCell>
                         </StyledTableRow>
                     ))}
