@@ -36,10 +36,16 @@ async function bl_allCategories() {
 //get product by category
 async function bl_dataByCategory(req: Request) {
     const category = req.body.category;
-    if (!category) {
+    
+    
+    if (!category) { 
+        // console.log(3,category);
+        
         throw new Err(422, "didn't get category! this is what i got " + category);
+       
     }
     const dal_respond = await dal_dataByCategory(category);
+    // console.log(2,category);
     return dal_respond;
 }
 

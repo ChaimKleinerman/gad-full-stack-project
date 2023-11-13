@@ -55,9 +55,11 @@ const controller_allCategories = async (req: Request, res: Response) => {
 // Controller to get data by category
 const controller_dataByCategory = async (req: Request, res: Response) => {
     try {
-        const data = await bl_dataByCategory(req);
+        const data = await bl_dataByCategory(req)
         res.send(data);
     } catch (err) {
+        console.log(1,req.body);
+                
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }

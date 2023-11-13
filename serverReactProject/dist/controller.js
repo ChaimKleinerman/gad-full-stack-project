@@ -45,6 +45,7 @@ const controller_dataByCategory = async (req, res) => {
         res.send(data);
     }
     catch (err) {
+        console.log(1, req.body);
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }
