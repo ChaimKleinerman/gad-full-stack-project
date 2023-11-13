@@ -5,6 +5,9 @@ import Categories from "../components/Categories";
 import Product from "../components/Product";
 import Cart from "../components/Cart";
 
+import ProductPage from "../components/productPage";
+import { CompareProducts } from "../components/ComparePage";
+
 export default function Routs() {
     const router = createBrowserRouter([
         {
@@ -24,7 +27,7 @@ export default function Routs() {
         {
             path:"/product/:id",
             element:(
-                <Product/>
+                <ProductPage/>
             ),
                 errorElement: <ErrorPage/>,
         },
@@ -34,6 +37,12 @@ export default function Routs() {
                 <Cart/>
             ),
             errorElement: <ErrorPage/>
+        },
+        {
+           path: "/compare",
+           element:(
+                <CompareProducts/>
+           )
         }
         
     ]);
