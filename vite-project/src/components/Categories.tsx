@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import CustomizedTables from "./mui/tableCategories";
 
 export default function Categories() {
     const { category } = useParams();
     console.log(category);
 
+const [products, setProducts] = useState([]);
     useEffect(() => {
        
         const url = "http://localhost:3000/api//products/category";
@@ -29,7 +32,7 @@ export default function Categories() {
             throw new Error("Request failed!");
         })
         .then((data) => {
-            console.log("PUT request succeeded with data:", data);
+            setProducts(data);
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -40,5 +43,9 @@ export default function Categories() {
 
    
 
-    return <div>Categories</div>;
+    return (
+        <>
+        <CustomizedTables products = {products}/>
+        </>
+    )
 }
