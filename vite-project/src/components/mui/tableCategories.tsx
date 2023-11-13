@@ -46,12 +46,16 @@ export default function CustomizedTables({ products }: Props) {
         const price = ["until 100","100-500","500-1000","1000-5000",'','','','','','','','']
         const rating = ["1-2","2-3","3-4","4-5",'','','','','','','','']
         const discountPercentage = ["0-10","10-20","20-30","30-40","40-50","50-60","60-70","70-80","80-90","90-100"]
-        const check:string[] = []
-        const rows = products.map((product,index) => {
-            check.push(product.brand)
-            if (!(check.includes(product.brand))) {
-              return  createData(product.brand,price[index],rating[index],discountPercentage[index])
+        const brands:string[] = [];
+        for (let i = 0; i < products.length; i++) {
+            if (!brands.includes(products[i].brand)) {
+            brands.push(products[i].brand);
+             }
             }
+        const rows = brands.map((brand,index) => {
+            
+        return  createData(brand,price[index],rating[index],discountPercentage[index])
+        
             
         });
         return rows;
@@ -81,6 +85,9 @@ export default function CustomizedTables({ products }: Props) {
                 <TableBody>
                     {rows.map((row) => (
                         <StyledTableRow key={row?.brand}>
+                        <StyledTableCell component="th" scope="row">
+                                {row?.brand}
+                            </StyledTableCell>
                             <StyledTableCell component="th" scope="row">
                                 {row?.price}
                             </StyledTableCell>
