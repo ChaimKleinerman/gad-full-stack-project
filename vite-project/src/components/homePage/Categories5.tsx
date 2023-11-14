@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Avatar, Box, Stack } from '@mui/material'
 import { ProductSubset } from '../../typse/typse'
 import { Link } from 'react-router-dom'
-import SimpleDialogDemo from '../mui/categoriesDialog'
-
+// import SimpleDialogDemo from '../mui/categoriesDialog'
 export default function Categories5() {
-
     const [allCategories, setallCategories] = useState<ProductSubset[]>([])
-
     useEffect(() => {
         const categories = async () => {
             return await fetch('http://localhost:3000/api/categories')
@@ -21,7 +18,6 @@ export default function Categories5() {
             <Stack direction="row" >
                 {
                     allCategories.map((categori, index) => {
-
                         return index < 5 ?
                             <Link
                                 key={index}
@@ -29,7 +25,7 @@ export default function Categories5() {
                                     width: '400px', // Adjust the width as needed
                                     height: '200px',
                                     color: 'white',
-                                    background: '#09056a',
+                                    background: '#09056A',
                                     textDecoration: 'none',
                                     padding: '10px', // Keep only one padding property
                                     border: '1px solid black',
@@ -39,13 +35,12 @@ export default function Categories5() {
                                     alignItems: 'center',
                                     justifyContent: 'space-evenly'
                                 }}
-                                to={`/categories`}>
+                                to={`/categories/${categori.name}`}>
                                 {categori.name}
                             </Link> : null
                     })
                 }
             </Stack>
-            <SimpleDialogDemo />
         </Box >
     )
 }
