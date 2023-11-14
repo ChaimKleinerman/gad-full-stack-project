@@ -49,6 +49,7 @@ export default function ProductPage() {
       <div>brand: {brand}</div>
       <br></br>
     </div>
+    
   return (
     <>
       <div style={{ display: 'flex' }}>
