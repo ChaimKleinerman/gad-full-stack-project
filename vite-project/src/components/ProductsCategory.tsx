@@ -3,6 +3,8 @@ import BasicCard from "./Card";
 import { Product } from "../typse/typse";
 import { Box } from "@mui/material";
 import { Stack } from "@mui/joy";
+import { BrowserRouter as Route, Link, useParams } from 'react-router-dom';
+
         
 interface Props {
   products: Product[];
@@ -22,7 +24,7 @@ export default function ProductsCategory({
         {products.map((product) =>
           product.brand === filter || filter === "" ? (
             <Stack key={product.id} sx={{ margin: "20px" }}>
-              <BasicCard product={product} />
+              <Link to={`/product/${product.id}`}><BasicCard product={product} /></Link>
             </Stack>
           ) : null
         )}
