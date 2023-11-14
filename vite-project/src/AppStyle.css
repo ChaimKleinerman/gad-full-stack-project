@@ -9,3 +9,15 @@
 body {
   margin: 0;
 }
+
+.tableRowHover:hover {
+  /* background-color: lightgray;  */
+  font-weight: 'bold';
+  cursor: pointer;
+}
+
+.hover-text:hover {
+  font-weight: bold;
+  color: red; /* יש לשנות לצבע שבו תרצה */
+  cursor: pointer;
+}
