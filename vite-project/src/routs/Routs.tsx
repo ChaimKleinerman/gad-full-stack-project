@@ -3,6 +3,7 @@ import ErrorPage from "./ErrorPage";
 import Home from "../components/Home";
 import Categories from "../components/Categories";
 import ProductPage from "../components/Product";
+import ComparePage from "../components/ComparePage";
 import Cart from "../components/Cart";
 import StatusLogsAndCart from "../components/StatusLogsAndCart";
 import Categories5 from "../components/homePage/Categories5";
@@ -39,6 +40,16 @@ export default function Routs() {
                 <>
                     <StatusLogsAndCart />
                     <ProductPage />
+                </>
+            ),
+            errorElement: <ErrorPage />,
+        },
+        {
+            path: "/compare",
+            element: (
+                <>
+                    <StatusLogsAndCart />
+                    <ComparePage />
                 </>
             ),
             errorElement: <ErrorPage />,
