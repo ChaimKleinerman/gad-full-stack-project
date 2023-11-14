@@ -22,7 +22,7 @@ export default function Categories5() {
                 {
                     allCategories.map((categori, index) => {
 
-                        return index > 0 ?
+                        return index < 5 ?
                             <Link
                                 key={index}
                                 style={{

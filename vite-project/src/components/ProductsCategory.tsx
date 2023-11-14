@@ -1,4 +1,4 @@
-import { Product } from "../types";
+import { Product } from "../typse/typse";
 
 interface Props {
     products: Product[];
