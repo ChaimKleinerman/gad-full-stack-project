@@ -1,133 +1,143 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-import { useReducer } from 'react';
+// import { Box, Button, Stack, Typography } from '@mui/material';
+// import { useEffect, useReducer, useState } from 'react';
+// import { Product } from '../typse/typse';
 
-interface Item {
-    id: number;
-    name: string;
-    price: string;
-}
+// // interface Product {
+// //     id: number;
+// //     name: string;
+// //     price: string;
+// // }
 
-interface CartItem extends Item {
-    quantity: number;
-}
+// interface CartProduct extends Product {
+//     quantity: number;
+// }
 
-const actionTypes = {
-    // ADD_TO_CART: 'ADD_TO_CART',
-    REMOVE_FROM_CART: 'REMOVE_FROM_CART',
-    INCREMENT_QUANTITY: 'INCREMENT_QUANTITY',
-    DECREMENT_QUANTITY: 'DECREMENT_QUANTITY',
-} as const;
+// const actionTypes = {
+//     // ADD_TO_CART: 'ADD_TO_CART',
+//     REMOVE_FROM_CART: 'REMOVE_FROM_CART',
+//     INCREMENT_QUANTITY: 'INCREMENT_QUANTITY',
+//     DECREMENT_QUANTITY: 'DECREMENT_QUANTITY',
+// } as const;
 
-type ActionTypes = typeof actionTypes;
+// type ActionTypes = typeof actionTypes;
 
-type Action = {
-    type: ActionTypes[keyof ActionTypes];
-    item: Item;
-} | {
-    type: 'CLEAR_CART'
-}
-
-// const items: Item[] = [
-//     { id: 1, name: 'Laptop', price: '1200' },
-//     { id: 2, name: 'Smartphone', price: '750' },
-//     { id: 3, name: 'Coffee Maker', price: '50' },
-//     { id: 4, name: 'Camera', price: '500' },
-//     { id: 5, name: 'Headphones', price: '35' },
-//     { id: 6, name: 'Tablet', price: '300' },
-//     { id: 7, name: 'Desk Chair', price: '110' },
-//     { id: 8, name: 'Television', price: '650' },
-//     { id: 9, name: 'Gaming Console', price: '400' },
-//     { id: 10, name: 'Blender', price: '80' },
-//     { id: 11, name: 'Toaster', price: '25' },
-//     { id: 12, name: 'Vacuum Cleaner', price: '150' },
-//     { id: 13, name: 'Hiking Boots', price: '120' },
-//     { id: 14, name: 'Dining Table', price: '300' },
-//     { id: 15, name: 'Refrigerator', price: '800' },
-//     { id: 16, name: 'Microwave Oven', price: '100' },
-//     { id: 17, name: 'Fitness Tracker', price: '60' },
-//     { id: 18, name: 'Sofa', price: '700' },
-//     { id: 19, name: 'Washing Machine', price: '450' },
-//     { id: 20, name: 'Coffee Table', price: '120' }];
+// type Action = {
+//     type: ActionTypes[keyof ActionTypes];
+//     Product: Product;
+// } | {
+//     type: 'CLEAR_CART'
+// }
 
 
+// const cartReducer = (state: CartProduct[], action: Action) => {
+//     switch (action.type) {
 
-const cartReducer = (state: CartItem[], action: Action) => {
-    switch (action.type) {
 
-        // case actionTypes.ADD_TO_CART:
-        //     const existingItem = state.find(item => item.id === action.item.id);
-        // if (existingItem) {
-        //     return state.map(item =>
-        //         item.id === action.item.id ? { ...item, quantity: item.quantity + 1 } : item
-        //     );
-        // } else {
-        //     return [...state, { ...action.item, quantity: 1 }];
-        // }
+//         case actionTypes.REMOVE_FROM_CART:
+//             return state.filter(Product => Product.id !== action.Product.id);
 
-        case actionTypes.REMOVE_FROM_CART:
-            return state.filter(item => item.id !== action.item.id);
+//         case actionTypes.INCREMENT_QUANTITY:
+//             return state.map(Product =>
+//                 Product.id === action.Product.id ? { ...Product, quantity: Product.quantity + 1 } : Product
+//             );
 
-        case actionTypes.INCREMENT_QUANTITY:
-            return state.map(item =>
-                item.id === action.item.id ? { ...item, quantity: item.quantity + 1 } : item
-            );
+//         case actionTypes.DECREMENT_QUANTITY:
+//             return state.map(Product =>
+//                 Product.id === action.Product.id
+//                     ? { ...Product, quantity: Product.quantity > 1 ? Product.quantity - 1 : 0 }
+//                     : Product
+//             ).filter(Product => Product.quantity > 0);
 
-        case actionTypes.DECREMENT_QUANTITY:
-            return state.map(item =>
-                item.id === action.item.id
-                    ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 0 }
-                    : item
-            ).filter(item => item.quantity > 0);
+//         case 'CLEAR_CART':
+//             return [];
+//         default:
+//             return state;
+//     }
+// };
 
-        case 'CLEAR_CART':
-            return [];
-        default:
-            return state;
-    }
-};
+// const ShoppingCart = () => {
+//     const [cart, dispatch] = useReducer(cartReducer, []);
+//     const [cartProdId, setCartProdId] = useState<number>()
+//     const [effectRefresh, setEffectRefresh] = useState(true)
 
-const ShoppingCart = () => {
-    const [cart, dispatch] = useReducer(cartReducer, []);
+//     useEffect(() => {
 
-    // const addToCart = (item: Item) => {
-    //     dispatch({ type: 'ADD_TO_CART', item });
-    // };
+//         const url = "http://localhost:3000/api/cart";
 
-    const removeFromCart = (item: Item) => {
-        dispatch({ type: 'REMOVE_FROM_CART', item });
-    };
+//         const data = {
+//             email: localStorage.getItem(),
+//             product_id: cartProdId
+//         };
 
-    const incrementQuantity = (item: Item) => {
-        dispatch({ type: 'INCREMENT_QUANTITY', item });
-    };
+//         const requestOptions = {
+//             method: "PUT",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify(data),
+//         };
+//         fetch(url, requestOptions)
+//             .then((response) => {
+//                 if (response.ok) {
+//                     return response.json();
 
-    const decrementQuantity = (item: Item) => {
-        dispatch({ type: 'DECREMENT_QUANTITY', item });
-    };
+//                 }
+//                 throw new Error("Request failed!");
+//             })
+//             .then((data) => {
+//                 console.log("PUT request succeeded with data:", data);
+//                 // setCartProdId(data)
+//             })
+//             .catch((error) => {
+//                 console.error("Error:", error);
+//             });
+//     }, [cartProdId])
+//     // useEffect(() => {
+//     //     const categories = async () => {
+//     //         // fetch all categories
+//     //         return await fetch('http://localhost:3000/api/cart',
+//     //         met)
+//     //     }
+//     //     categories().then(data => data.json())
+//     //         .then((data) => setCartProd(data))
+//     // }, [])
 
-    const clearCart = () => {
-        dispatch({
-            type: 'CLEAR_CART'
-        });
-    };
 
-    return (
-        <Box>
-            <Typography variant="h3">Cart</Typography>
-            <Stack spacing={2}>
+//     const removeFromCart = (Product: Product) => {
+//         dispatch({ type: 'REMOVE_FROM_CART', Product });
+//     };
 
-                {cart.map(item => (
-                    <Stack key={item.id}>
-                        {item.name} - ${item.price} - Quantity: {item.quantity}
-                        <Button onClick={() => removeFromCart(item)}>Remove from Cart</Button>
-                        <Button onClick={() => incrementQuantity(item)}>+</Button>
-                        <Button onClick={() => decrementQuantity(item)}>-</Button>
-                    </Stack>
-                ))}
-            </Stack>
-            <Button onClick={clearCart}>Clear Cart</Button>
-        </Box>
-    );
-};
+//     const incrementQuantity = (Product: Product) => {
+//         dispatch({ type: 'INCREMENT_QUANTITY', Product });
+//     };
 
-export default ShoppingCart;
+//     const decrementQuantity = (Product: Product) => {
+//         dispatch({ type: 'DECREMENT_QUANTITY', Product });
+//     };
+
+//     const clearCart = () => {
+//         dispatch({
+//             type: 'CLEAR_CART'
+//         });
+//     };
+
+//     return (
+//         <Box>
+//             <Typography variant="h3">Cart</Typography>
+//             <Stack spacing={2}>
+
+//                 {cart.map(Product => (
+//                     <Stack key={Product.id}>
+//                         {Product.title} - ${Product.price} - Quantity: {Product.quantity}
+//                         <Button onClick={() => { removeFromCart(Product) }}>Remove from Cart</Button>
+//                         <Button onClick={() => { setCartProdId(Product.id); incrementQuantity(Product) }}>+</Button>
+//                         <Button onClick={() => { setCartProdId(Product.id); decrementQuantity(Product) }}>-</Button>
+//                     </Stack>
+//                 ))}
+//             </Stack>
+//             <Button onClick={clearCart}>Clear Cart</Button>
+//         </Box>
+//     );
+// };
+
+// export default ShoppingCart;

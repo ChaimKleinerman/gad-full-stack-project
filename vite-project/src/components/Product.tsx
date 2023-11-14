@@ -51,19 +51,3 @@ export default function ProductPage() {
     </div>
     console.log(brand);
     
-  return (
-    <>
-      <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: '80px' }}> {productInfo} </div>
-        <button><img src={thumbnail}></img></button>
-      </div>
-      <Link to="/cart">
-        <IconButton color="primary" aria-label="add to shopping cart">
-          <AddShoppingCartIcon />
-        </IconButton>
-      </Link>
-    </>
-  )
-}
-
-

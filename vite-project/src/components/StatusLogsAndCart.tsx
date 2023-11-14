@@ -4,11 +4,8 @@ import { IconButton } from '@mui/material';
 // import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import SignIn from './mui/SignIn';
-import SignUp from './mui/SignUp';
 
 const StatusLogsAndCart = () => {
-    const [flag, setFlag] = React.useState(false);
     return (
         <Box sx={containerStyle}>
             <Link
@@ -19,8 +16,9 @@ const StatusLogsAndCart = () => {
             <Box style={textBoxStyle}>
                 Hello Guest
                 <br />
-                <SignIn setFlag = {setFlag} />
-                <SignUp flag = {flag} setFlag = {setFlag}/>
+                <Link to={``} style={linkStyle}>
+                    Login
+                </Link>
             </Box>
         </Box>
     );
