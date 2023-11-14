@@ -19,8 +19,35 @@ export default function Prod5() {
     }, [])
     console.log(allCategories);
     return (
-        <>
-        </>
+        <Box>
+            <Stack direction="row" >
+                {
+                    allCategories.map((categori, index) => {
+
+                        return index < 5 ?
+                            <Link
+                                key={index}
+                                style={{
+                                    width: '400px', // Adjust the width as needed
+                                    height: '200px',
+                                    color: 'white',
+                                    background: '#09056a',
+                                    textDecoration: 'none',
+                                    padding: '10px', // Keep only one padding property
+                                    border: '1px solid black',
+                                    borderRadius: '70px',
+                                    margin: '2px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-evenly'
+                                }}
+                                to={`/products`}>
+                                {categori.title}
+                            </Link> : null
+                    })
+                }
+            </Stack>
+        </Box >
     )
 }
 
