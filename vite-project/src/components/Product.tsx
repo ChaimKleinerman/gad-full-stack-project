@@ -3,6 +3,7 @@ import { BrowserRouter as Route, Link, useParams } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Product } from '../typse/typse';
+
 export default function ProductPage() {
   const { id } = useParams();
   console.log(id);
@@ -24,11 +25,43 @@ export default function ProductPage() {
       fetch(`http://localhost:3000/api/products/${id}`)
         .then(data => data.json())
         .then((myProduct) => {
-          setProduct(myProduct[0]);
+          setProduct(myProduct);
         })
     }
     fetchOneProduct()
   }, [])
+
+  const addToCart = async (id) => {
+
+    const email = localStorage.getItem('email')
+
+    const url = "http://localhost:3000/api/cart";
+    const data = {
+      email: email,
+      productId: id
+    };
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    fetch(url, requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Request failed!");
+      })
+      .then((data) => {
+        console.log("PUT request succeeded with data:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
   const { title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, images } = product;
   let productInfo =
     <div>
@@ -48,11 +81,14 @@ export default function ProductPage() {
         <div style={{ marginRight: '80px' }}> {productInfo} </div>
         <button><img src={thumbnail}></img></button>
       </div>
-      <Link to="/cart">
-        <IconButton color="primary" aria-label="add to shopping cart">
-          <AddShoppingCartIcon />
-        </IconButton>
-      </Link>
+      {/* <Link to="/cart"> */}
+      <IconButton
+        onClick={() => addToCart(id)}
+        color="primary"
+        aria-label="add to shopping cart">
+        <AddShoppingCartIcon />
+      </IconButton>
+      {/* </Link> */}
     </>
   )
 }
