@@ -34,6 +34,7 @@ export default function Categories() {
             })
             .then((data) => {
                 console.log("PUT request succeeded with data:", data);
+                setProducts(data)
             })
             .catch((error) => {
                 console.error("Error:", error);
