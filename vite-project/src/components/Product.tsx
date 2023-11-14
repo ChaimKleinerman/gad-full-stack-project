@@ -28,7 +28,8 @@ export default function ProductPage() {
       fetch(`http://localhost:3000/api/products/${id}`)
         .then(data => data.json())
         .then((myProduct) => {
-          setProduct(myProduct[0]);
+            console.log(myProduct)
+          setProduct(myProduct);
         })
     }
     fetchOneProduct()
@@ -48,7 +49,8 @@ export default function ProductPage() {
       <div>brand: {brand}</div>
       <br></br>
     </div>
-
+    console.log(brand);
+    
   return (
     <>
       <div style={{ display: 'flex' }}>
