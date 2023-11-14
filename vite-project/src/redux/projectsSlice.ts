@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Product } from '../components/productPage';
+import { Product } from '../components/types';
 
 
 interface ProductState {
@@ -38,7 +38,7 @@ interface ProductState {
 
 const initialState: ProductState = {
   product1: {
-    id: 1,
+    id: 0,
     title: '',
     description: '',
     price: 1,
@@ -53,7 +53,7 @@ const initialState: ProductState = {
     cart: false
   },
   product2: {
-    id: 2,
+    id: 0,
     title: '',
     description: '',
     price: 1,

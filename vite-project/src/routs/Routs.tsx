@@ -4,7 +4,6 @@ import Home from "../components/Home";
 import Categories from "../components/Categories";
 import Product from "../components/Product";
 import Cart from "../components/Cart";
-
 import ProductPage from "../components/productPage";
 import { CompareProducts } from "../components/ComparePage";
 
@@ -43,7 +42,7 @@ export default function Routs() {
            element:(
                 <CompareProducts/>
            )
-        }
+        },
         
     ]);
 

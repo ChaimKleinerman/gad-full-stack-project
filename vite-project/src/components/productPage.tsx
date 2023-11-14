@@ -3,25 +3,10 @@ import { BrowserRouter as Route, Link, useParams } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { CompareProducts } from './ComparePage';
 import { useAppDispatch } from '../redux/hooks';
 import { saveProduct1 } from '../redux/projectsSlice';
+import { Product } from './types';
 
-export interface Product {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    images?: string[];
-    times_chosen?: number,
-    cart?: boolean
-}
 
 export default function ProductPage() {
     const dispatch = useAppDispatch();
@@ -80,9 +65,10 @@ export default function ProductPage() {
                     <AddShoppingCartIcon />
                 </IconButton>
             </Link>
-            <Link to="/galery"> <Button variant="outlined" onClick={() => {dispatch(saveProduct1(product))}}>compare to other product</Button></Link>
+            
+            {/* <Link to="/fakeStoreTest"> <Button variant="outlined" onClick={() => {dispatch(saveProduct1(product))}}>compare to other product</Button></Link> */}
+            <Link to="/compare"> <Button variant="outlined">to compare page</Button></Link>
         </>
-
     )
 }
 
