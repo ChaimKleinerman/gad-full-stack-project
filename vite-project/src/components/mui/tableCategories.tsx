@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Product } from "../../types";
+import { Product } from "../../typse/typse.ts"
 import { Dispatch } from "react";
 
 interface Props {

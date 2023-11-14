@@ -1,4 +1,4 @@
-import { Product } from "../types";
+import { Product } from "../typse/typse";
 
 interface Props {
     products: Product[];
@@ -11,6 +11,8 @@ export default function ProductsCategory({
     filter,
     filterType,
 }: Props) {
+    console.log("productsCategoy working", products);
+    
     if (filterType === "brand") {
         return (
             <div>
@@ -35,13 +37,16 @@ export default function ProductsCategory({
         const filterSplitNumber = parseInt(filter.split("-")[1]);
         const filterSplitNumber2 = parseInt(filter.split("-")[0]);
         console.log(filterSplitNumber);
-        
+
         return (
             <div>
                 {products.map((product) => {
                     console.log(Math.floor(product[filterType]));
-                    
-                    if (Math.floor(product[filterType]) <= filterSplitNumber && Math.floor(product[filterType]) > filterSplitNumber2) {
+
+                    if (
+                        Math.floor(product[filterType]) < filterSplitNumber &&
+                        Math.floor(product[filterType]) >= filterSplitNumber2
+                    ) {
                         return (
                             <div key={product.id}>
                                 <h1>{product.title}</h1>
@@ -53,7 +58,7 @@ export default function ProductsCategory({
                             </div>
                         );
                     }
-                    return null; 
+                    return null;
                 })}
             </div>
         );

@@ -27,7 +27,7 @@ export default function Routs() {
             path: "/categories/:category",
             element: (
                 <>
-                    <StatusLogsAndCart />
+                    {/* <StatusLogsAndCart /> */}
                     <Categories />
                 </>
             ),
