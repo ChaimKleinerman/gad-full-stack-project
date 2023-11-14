@@ -1,8 +1,9 @@
+
 import BasicCard from "./Card";
 import { Product } from "../typse/typse";
 import { Box } from "@mui/material";
 import { Stack } from "@mui/joy";
-
+        
 interface Props {
   products: Product[];
   filter: string;
@@ -14,6 +15,7 @@ export default function ProductsCategory({
   filter,
   filterType,
 }: Props) {
+
   if (filterType === "brand") {
     return (
       <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
