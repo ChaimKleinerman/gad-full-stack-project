@@ -8,11 +8,11 @@ router.get("/products", controller_allData);
 //user register
 router.post("/register", controller_userRegister);
 //user login
-router.post("/login", controller_login);
+router.post("login", controller_login);
 //get all categories
 router.get("/categories", controller_allCategories);
 //get product by id
-router.get("catagories", controller_dataById);
+router.get("/products/:id", controller_dataById);
 //get product by category
 router.put("/products/category", controller_dataByCategory);
 //add to cart

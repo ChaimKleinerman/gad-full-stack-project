@@ -64,13 +64,14 @@ const bl_login = async (req) => {
 };
 //add to cart
 const bl_addToCart = async (req) => {
-    const user_id = req.body.user_id;
+    const user_email = req.body.user_id;
     const product_id = req.body.product_id;
-    if (!user_id)
+    const action = req.body.action;
+    if (!user_email)
         throw new Err(400, "didn't get user id");
     if (!product_id)
         throw new Err(400, "didn't get product id");
-    const dal_respond = await dal_addToCart(user_id, product_id);
+    const dal_respond = await dal_addToCart(user_email, product_id);
     return dal_respond;
 };
 //get cart

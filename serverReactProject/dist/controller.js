@@ -17,10 +17,12 @@ const controller_allData = async (req, res) => {
 // Controller to get data by ID
 const controller_dataById = async (req, res) => {
     try {
+        console.log(1, req.params);
         const user_id = await bl_dataById(req);
         res.send(user_id);
     }
     catch (err) {
+        console.log(1, req.params);
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }
@@ -66,11 +68,12 @@ const controller_userRegister = async (req, res) => {
 // Controller for user login
 const controller_login = async (req, res) => {
     try {
-        console.log(req.headers); // For debugging purposes
+        console.log('get in to controler', req.body); // For debugging purposes
         const token = await bl_login(req);
         res.send(token);
     }
     catch (err) {
+        console.log('get in to controler', req.body); // For debugging purposes
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }

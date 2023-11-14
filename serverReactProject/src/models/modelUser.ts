@@ -5,7 +5,9 @@ const {Schema,model}  = mongoose
 const userSchema = new Schema(
     {
        email:String,
-       password:String
+       password:String,
+       cart:Number
+
     }
 )
 

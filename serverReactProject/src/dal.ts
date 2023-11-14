@@ -51,7 +51,9 @@ const dal_dataByCategory = async (category: string) => {
 
 //gat data by id
 async function dal_dataById(id: string) {
-    const dataById = await productModel.findById(id).exec();
+    const dataById = await productModel.findOne({id:id}).exec();
+    console.log(dataById);
+    
     if (!dataById) {
         throw { code: 42231, massage: "data not found" };
     }
@@ -60,6 +62,8 @@ async function dal_dataById(id: string) {
 
 //user register
 async function dal_insertUser(email: string, password: string) {
+    console.log('get req dal',email, password);
+    
     const newUser = new UserModel({ email: email, password: password });
     const result = await newUser.save();
     if (!result) throw new Err(500, "the insert been felid");
@@ -67,6 +71,7 @@ async function dal_insertUser(email: string, password: string) {
 }
 //user login
 const dal_login = async (email: string, password: string) => {
+    console.log('get req dal',email, password)
     const user = UserModel.findOne({ email: email, password: password });
     if (!user) throw new Err(400, "user is not exist");
     return "user exist";
