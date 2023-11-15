@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 
 export default function Cart() {
   const [allCart, setallCart] = useState([])
-  const email = localStorage.getItem('email')
+ 
 
   useEffect(() => {
-    const url = "http://localhost:3000/api/cart";
+    const email = localStorage.getItem('email')
+    const url = "http://localhost:3000/api/cart/get";
     const data = {
       email: email,
     };
@@ -20,6 +21,8 @@ export default function Cart() {
     fetch(url, requestOptions)
       .then((response) => {
         if (response.ok) {
+            console.log(response);
+            
           return response.json();
         }
         throw new Error("Request failed!");

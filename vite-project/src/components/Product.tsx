@@ -54,13 +54,8 @@ export default function ProductPage() {
         };
         fetch(url, requestOptions)
             .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error("Request failed!");
-            })
-            .then((data) => {
-                console.log("PUT request succeeded with data:", data);
+                console.log(response);
+            
             })
             .catch((error) => {
                 console.error("Error:", error);
