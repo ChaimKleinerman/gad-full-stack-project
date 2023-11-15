@@ -41,36 +41,46 @@ const StatusLogsAndCart = () => {
                 </Box>}
             </Box>
 
+
         </Box>
-    );
+      </Box>
+
+      <Box>
+        <Link style={iconButtonStyle} to={`/`}>
+          <HomeIcon fontSize="large" />
+        </Link>
+      </Box>
+    </Box>
+  );
 };
 
 const containerStyle = {
-    display: 'flex',
-    alignItems: 'stretch',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    textAlign: 'center',
-    padding: '20px',
-    background: '#09056a'
+  display: "flex",
+  alignItems: "stretch",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  textAlign: "center",
+  padding: "20px",
+  background: "#09056a",
 };
 
 const iconButtonStyle = {
     color: 'white',
     cursor: 'pointer'
+
 };
 
 const textBoxStyle = {
-    fontFamily: 'Arial, sans-serif',
-    fontSize: '16px',
-    color: 'white',
-    padding: '5px'
+  fontFamily: "Arial, sans-serif",
+  fontSize: "16px",
+  color: "white",
+  padding: "5px",
 };
 
 const linkStyle = {
-    textDecoration: 'underline',
-    color: 'white',
-    padding: '5px'
+  textDecoration: "underline",
+  color: "white",
+  padding: "5px",
 };
 
 export default StatusLogsAndCart;

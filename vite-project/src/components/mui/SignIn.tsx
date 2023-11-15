@@ -56,8 +56,9 @@ export default function SignIn({ setFlag, setStorage }: Props) {
                 sx={{ color: '#ffffff', cursor: 'pointer' }}
 
                 onClick={handleClickOpen}>
+            <div style={linkStyle} onClick={handleClickOpen}>
                 Sign In
-            </Button>
+            </div>
 
             <Dialog open={open} onClose={handleClickClose}>
                 <DialogTitle>Connect</DialogTitle>
@@ -111,3 +112,9 @@ export default function SignIn({ setFlag, setStorage }: Props) {
         </React.Fragment>
     );
 }
+
+const linkStyle = {
+    textDecoration: "underline",
+    color: "white",
+    padding: "5px",
+  };
