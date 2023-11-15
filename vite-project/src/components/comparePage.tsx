@@ -1,4 +1,7 @@
 import { useAppSelector } from "../redux/hooks"
+import IconButton from '@mui/material/IconButton';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,85 +16,103 @@ export default function ComparePage() {
     const product1 = useAppSelector((state) => state.products.product1);
     const product2 = useAppSelector((state) => state.products.product2);
 
+    const cartButton =
+        <IconButton
+            // onClick={() => addToCart(id)}
+            color="primary"
+            aria-label="add to shopping cart"
+        >
+            <AddShoppingCartIcon />
+        </IconButton>
+
     return (
         <>
-        <h1>compare page</h1>
+            <h1>compare page</h1>
 
 
-<TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="left">Product</TableCell>
-                        <TableCell align="left">{product1.title}</TableCell>
-                        <TableCell align="left">{product2.title}</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell align='left'></TableCell>
-                    <TableCell align='left'>
-                        <img src={product1.thumbnail} alt='product image' style={{width: '150px', height: '150px'}}/>
-                    </TableCell>
-                    <TableCell align='left'>
-                        <img src={product2.thumbnail} alt='product image' style={{width: '150px', height: '150px'}}/>
-                    </TableCell>
-                    </TableRow>
-                    <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell align='left'>category</TableCell>
-                    <TableCell align='left'>{product1.category}</TableCell>
-                    <TableCell align='left'>{product2.category}</TableCell>
-                    </TableRow>
-                    <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell align='left'>description</TableCell>
-                    <TableCell align='left'>{product1.description}</TableCell>
-                    <TableCell align='left'>{product2.description}</TableCell>
-                    </TableRow>
-                    <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell align='left'>price</TableCell>
-                    <TableCell align='left'>{product1.price}</TableCell>
-                    <TableCell align='left'>{product2.price}</TableCell>
-                    </TableRow>
-                    <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell align='left'>discountPercentage</TableCell>
-                    <TableCell align='left'>{product1.discountPercentage}</TableCell>
-                    <TableCell align='left'>{product2.discountPercentage}</TableCell>
-                    </TableRow>
-                    <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell align='left'>rating</TableCell>
-                    <TableCell align='left'>{product1.rating}</TableCell>
-                    <TableCell align='left'>{product2.rating}</TableCell>
-                    </TableRow>
-                    <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell align='left'>stock</TableCell>
-                    <TableCell align='left'>{product1.stock}</TableCell>
-                    <TableCell align='left'>{product2.stock}</TableCell>
-                    </TableRow>
-                    <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell align='left'>brand</TableCell>
-                    <TableCell align='left'>{product1.brand}</TableCell>
-                    <TableCell align='left'>{product2.brand}</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
-        <br></br>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="left">Product</TableCell>
+                            <TableCell align="left">{product1.title}</TableCell>
+                            <TableCell align="left">{product2.title}</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'></TableCell>
+                            <TableCell align='left'>
+                                <img src={product1.thumbnail} alt='product image' style={{ width: '200px', height: '150px' }} />
+                            </TableCell>
+                            <TableCell align='left'>
+                                <img src={product2.thumbnail} alt='product image' style={{ width: '200px', height: '150px' }} />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'>category</TableCell>
+                            <TableCell align='left'>{product1.category}</TableCell>
+                            <TableCell align='left'>{product2.category}</TableCell>
+                        </TableRow>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'>description</TableCell>
+                            <TableCell align='left'>{product1.description}</TableCell>
+                            <TableCell align='left'>{product2.description}</TableCell>
+                        </TableRow>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'>price</TableCell>
+                            <TableCell align='left'>{product1.price}</TableCell>
+                            <TableCell align='left'>{product2.price}</TableCell>
+                        </TableRow>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'>discountPercentage</TableCell>
+                            <TableCell align='left'>{product1.discountPercentage}</TableCell>
+                            <TableCell align='left'>{product2.discountPercentage}</TableCell>
+                        </TableRow>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'>rating</TableCell>
+                            <TableCell align='left'>{product1.rating}</TableCell>
+                            <TableCell align='left'>{product2.rating}</TableCell>
+                        </TableRow>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'>stock</TableCell>
+                            <TableCell align='left'>{product1.stock}</TableCell>
+                            <TableCell align='left'>{product2.stock}</TableCell>
+                        </TableRow>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'>brand</TableCell>
+                            <TableCell align='left'>{product1.brand}</TableCell>
+                            <TableCell align='left'>{product2.brand}</TableCell>
+                        </TableRow>
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align='left'></TableCell>
+                            <TableCell align='left'>{cartButton}</TableCell>
+                            <TableCell align='left'>{cartButton}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <br></br>
+
+
         </>
     )
 }
