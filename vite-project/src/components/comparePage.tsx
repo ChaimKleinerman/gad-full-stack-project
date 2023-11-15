@@ -1,7 +1,8 @@
-import { useAppSelector } from "../redux/hooks"
+import { useAppSelector } from "../redux/hooks";
+import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,20 +16,40 @@ import Paper from '@mui/material/Paper';
 export default function ComparePage() {
     const product1 = useAppSelector((state) => state.products.product1);
     const product2 = useAppSelector((state) => state.products.product2);
+    let ID1 = product1.id.toString();
+    let ID2 = product2.id.toString();
 
-    const cartButton =
-        <IconButton
-            // onClick={() => addToCart(id)}
-            color="primary"
-            aria-label="add to shopping cart"
-        >
-            <AddShoppingCartIcon />
-        </IconButton>
+    const addToCart = async (id: string | undefined) => {
+        const email = localStorage.getItem("email");
+
+        const url = "http://localhost:3000/api/cart";
+        const data = {
+            email: email,
+            productId: id,
+        };
+        const requestOptions = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        };
+        fetch(url, requestOptions)
+            .then((response) => {
+                console.log(response);
+
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
 
     return (
         <>
             <h1>compare page</h1>
-
+            <Link to={`/categories/${product1.category}`}>
+                <Button variant="outlined">{`back to ${product1.category}`}</Button>
+            </Link>
 
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -75,7 +96,7 @@ export default function ComparePage() {
                         <TableRow
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell align='left'>discountPercentage</TableCell>
+                            <TableCell align='left'>discount percentage</TableCell>
                             <TableCell align='left'>{product1.discountPercentage}</TableCell>
                             <TableCell align='left'>{product2.discountPercentage}</TableCell>
                         </TableRow>
@@ -104,14 +125,28 @@ export default function ComparePage() {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell align='left'></TableCell>
-                            <TableCell align='left'>{cartButton}</TableCell>
-                            <TableCell align='left'>{cartButton}</TableCell>
+                            <TableCell align='left'>
+                                {<IconButton
+                                    onClick={() => addToCart(ID1)}
+                                    color="primary"
+                                    aria-label="add to shopping cart"
+                                >
+                                    <AddShoppingCartIcon />
+                                </IconButton>}
+                            </TableCell>
+                            <TableCell align='left'>
+                                {<IconButton
+                                    onClick={() => addToCart(ID2)}
+                                    color="primary"
+                                    aria-label="add to shopping cart"
+                                >
+                                    <AddShoppingCartIcon />
+                                </IconButton>}
+                            </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
-            <br></br>
-
 
         </>
     )

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Route, Link, useParams } from 'react-router-dom';
+// import { Button } from '@mui/base';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Product } from '../typse/typse';
@@ -93,7 +95,11 @@ export default function ProductPage() {
     }
 
     return (
-        <>
+        <>  
+            <Link to={`/categories/${category}`} >
+                <Button variant="outlined">{`back to ${category}`}</Button>    
+            </Link>
+            
             <div style={{ display: 'flex' }}>
                 <div style={{ marginRight: '80px' }}> {productInfo} </div>
                 <img src={thumbnail}></img>
@@ -105,11 +111,11 @@ export default function ProductPage() {
             >
                 <AddShoppingCartIcon />
             </IconButton>
-            <Link to={`/categories/${category}`} ><button onClick={() => saveProductToRedux()}>compare to other product</button></Link>
+            {/* <Link to={`/categories/${category}`} ><button onClick={() => saveProductToRedux()}>compare to other product</button></Link> */}
+            <Link to={`/categories/${category}`} >
+                <Button variant="outlined" onClick={() => saveProductToRedux()}>compare to other product</Button>    
+            </Link>
+            
         </>
-    )
-}
-
-
-
-
+            )
+        }
