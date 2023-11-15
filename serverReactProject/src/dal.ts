@@ -99,7 +99,7 @@ const dal_addToCart = async (user_email: string, product_id: string) => {
 // Get cart
 const dal_getCart = async (user_email: string) => {
     try {
-        console.log('get req dal', user_email);
+        console.log('getcart req dal', user_email);
 
         // Find the user document by user_id and select the 'cart' property
         const user = await UserModel.findOne({ email: user_email }).select("cart").exec();
@@ -117,10 +117,14 @@ const dal_getCart = async (user_email: string) => {
             .map(id => parseInt(id as string, 10))
         console.log('this definde', definedProductsId);
 
-        const products = await productModel.find({ id: { $in: definedProductsId } })
-        console.log(products, 'this is products');
+        const quantities =user.cart.map(item => (item.quantity));
+        console.log('this quantities', quantities);
+        
 
-        return products;
+        const products = await productModel.find({ id: { $in: definedProductsId } })
+        // console.log(products, 'this is products');
+
+        return [products, quantities];
     } catch (error) {
         console.log('get req dal error second');
         // Handle errors, log them, or throw a custom error
@@ -129,35 +133,53 @@ const dal_getCart = async (user_email: string) => {
 };
 
 //update cart
-const dal_updateCart = async (user_email: string, product_id: string, action: string) => {
-    let updateOperation;
+const dal_updateCart = async (
+    user_email: string,
+    product_id: string,
+    action: string
+) => {
+    console.log('get to dal', user_email, typeof (product_id), action);
 
+    let updateOperation: any;
     switch (action) {
-        case '+':
-            updateOperation = { $inc: { 'cart.$[elem].quantity': 1 } };
+        case "+":
+            updateOperation = { $inc: { 'cart.$.quantity': 1 } };
             break;
-        case '-':
-            updateOperation = { $inc: { 'cart.$[elem].quantity': -1 } };
+        case "-":
+            updateOperation = { $inc: { 'cart.$.quantity': -1 } };   
             break;
-        case 'remove':
-            updateOperation = { $pull: { cart: { product_id } } };
+        case "remove":
+            updateOperation = { $pull: { cart: { product_id: product_id } } };
             break;
-        case '':
-            updateOperation = { $set: { cart: [] } }; // Set the cart array to an empty array
+        case "delete":
+            updateOperation = { $set: { cart: [] } };
             break;
         default:
             throw new Err(400, "Invalid action");
     }
 
-    const options = { arrayFilters: [{ 'elem.product_id': product_id }] };
+    try {
+        console.log('update cart dal', updateOperation)
+        
+        const updatedUser = await UserModel.updateOne(
+            { email: user_email,"cart.product_id": product_id },
+            updateOperation,
+            { new: true }
+        );
 
-    const updatedUser = await UserModel.findOneAndUpdate({ email: user_email }, updateOperation, { new: true, arrayFilters: options.arrayFilters });
+        console.log('cart update updatue user',updatedUser);
 
-    if (!updatedUser) {
-        throw new Err(500, "The update operation failed");
+        if (!updatedUser) {
+            console.log('cart update updatue user error');
+            
+            throw new Err(500, "The update operation failed");
+        }
+
+        return "The product operation was successful";
+    } catch (error) {
+        console.error(error);
+        throw new Err(500, "An error occurred during the update operation");
     }
-
-    return "The product operation was successful";
 };
 
 

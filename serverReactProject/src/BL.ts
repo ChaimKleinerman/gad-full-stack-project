@@ -100,7 +100,7 @@ const bl_getCart = async (req: Request) => {
 
 
     const user_email = req.body.email;
-    console.log('get in to bl', user_email);
+    console.log('getcart in to bl', user_email);
 
     if (!user_email) throw new Err(400, "didn't get user id");
     const dal_respond = await dal_getCart(user_email);
@@ -108,8 +108,8 @@ const bl_getCart = async (req: Request) => {
 }
 //update cart 
 const bl_updateCart = async (req: Request) => {
-    const user_email = req.body.user_id;
-    const product_id = req.body.product_id;
+    const user_email = req.body.email;
+    const product_id = req.body.productId;
     const action = req.body.action;
     if (!user_email) throw new Err(400, "didn't get user id");
     if (!product_id) throw new Err(400, "didn't get product id");

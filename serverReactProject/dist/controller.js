@@ -98,12 +98,12 @@ const controller_addToCart = async (req, res) => {
 //get cart
 const controller_getCart = async (req, res) => {
     try {
-        console.log('get in to controler', req.body);
+        console.log('getcart in controler', req.body);
         const data = await bl_getCart(req);
         res.send(data);
     }
     catch (err) {
-        console.log('ERROR AT CONTROLLER');
+        console.log('ERROR getcart AT CONTROLLER');
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }
@@ -112,6 +112,7 @@ const controller_getCart = async (req, res) => {
 //update cart
 const controller_updateCart = async (req, res) => {
     try {
+        console.log('cart update controller', req.body);
         const data = await bl_updateCart(req);
         res.send(data);
     }
