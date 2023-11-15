@@ -40,9 +40,7 @@ const dal_dataByCategory = async (category) => {
 };
 //gat data by id
 async function dal_dataById(id) {
-    console.log('get into dal');
-    const dataById = await productModel.findOne({ id: id }).sort({ "timeChosen": -1 }).exec();
-    console.log(dataById?.times_chosen);
+    const dataById = await productModel.findOne({ id: id }).exec();
     console.log(dataById);
     if (!dataById) {
         console.log('didnt get data');
