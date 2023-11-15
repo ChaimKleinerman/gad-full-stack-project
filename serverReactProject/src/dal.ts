@@ -10,19 +10,21 @@ connectToDb();
 
 //gat all products
 const dal_allData = async () => {
-    const data = await productModel.find({}).sort({"timeChosen":1}).exec();
+    const data = await productModel.find({}).sort({"timeChosen":-1}).exec();
     if (!data) {
         throw new Err(500, "the get all been filed");
     }
+    
     return data;
 };
 //get all categories
 const dal_allCategories = async () => {
-    const categories = await CategoryModel.find({}).sort({"timeChosen":1}).exec();
+    const categories = await CategoryModel.find({}).sort({"timeChosen":-1}).exec();
     if (!categories) {
         throw new Err(500, "the get all categories been filed");
     }
     console.log('categories this is what i got');
+    
     
     return categories;
 };
@@ -111,7 +113,7 @@ const dal_getCart = async (user_email: string) => {
         const productsId = user.cart.map(item => (  item.product_id));
         const definedProductsId = productsId
   .filter(id => id !== undefined && id !== null)
-  .map(id => parseInt(id, 10))
+  .map(id => parseInt(id as string, 10))
   console.log('this definde',definedProductsId);
   
   const products = await productModel.find({ id: { $in:definedProductsId} })
