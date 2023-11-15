@@ -41,7 +41,7 @@ const dal_dataByCategory = async (category: string) => {
     const incrementChosenCategory = await CategoryModel.findOneAndUpdate(
         { name: category },
         { $inc: { timeChosen: 1 } }
-    );
+    ); 
     if (!incrementChosenCategory) {
         throw new Err(500, "the increment been filed");
     }
@@ -55,7 +55,9 @@ const dal_dataByCategory = async (category: string) => {
 async function dal_dataById(id: string) {
     console.log('get into dal');
     
-    const dataById = await productModel.findOne({id:id}).exec();
+    const dataById = await productModel.findOne({id:id}).sort({"timeChosen":-1}).exec();
+    console.log(dataById?.times_chosen);
+    
     console.log(dataById);
     
     if (!dataById) {
