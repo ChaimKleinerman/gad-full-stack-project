@@ -7,71 +7,123 @@ import { useAppDispatch } from '../redux/hooks';
 import { useAppSelector } from '../redux/hooks';
 import { saveProduct1 } from '../redux/projectsSlice';
 
-
 export default function ProductPage() {
-  const dispatch = useAppDispatch()
-  const product1 = useAppSelector((state) => state.products.product1);
+    const dispatch = useAppDispatch()
+    const product1 = useAppSelector((state) => state.products.product1);
 
-  const { id } = useParams();
+    const { id } = useParams();
+    const [product, setProduct] = useState<Product>({
+        id: 1,
+        title: 'The Amazing SanDisk',
+        description: 'The amazing sandisk is really amazing.',
+        price: 1000,
+        discountPercentage: 1,
+        rating: 1,
+        stock: 1,
+        brand: 'string',
+        category: 'string',
+        thumbnail: 'string',
+        images: [''],
+    });
+    useEffect(() => {
+        const fetchOneProduct = () => {
+            fetch(`http://localhost:3000/api/products/${id}`)
+                .then(data => data.json())
+                .then((myProduct) => {
+                    setProduct(myProduct[0]);
+                })
+        }
+        fetchOneProduct()
+    }, [])
 
-  const [product, setProduct] = useState<Product>({
-    id: 1,
-    title: 'The Amazing SanDisk',
-    description: 'The amazing sandisk is really amazing. Buy it now so I will get all your money oops I said it loud',
-    price: 1000,
-    discountPercentage: 1,
-    rating: 1,
-    stock: 1,
-    brand: 'string',
-    category: 'string',
-    thumbnail: 'string',
-    images: ['https://m.media-amazon.com/images/I/61H7b1hylLL._AC_UF1000,1000_QL80_.jpg'],
-  });
-  useEffect(() => {
-    const fetchOneProduct = () => {
-      fetch(`http://localhost:3000/api/products/${id}`)
-        .then(data => data.json())
-        .then((myProduct) => {
-            console.log(myProduct)
-          setProduct(myProduct[0]);
-        })
-    }
-    fetchOneProduct()
-  }, [])
+    const addToCart = async (id: string | undefined) => {
+        const email = localStorage.getItem("email");
 
-  const { title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, images } = product;
+        const url = "http://localhost:3000/api/cart";
+        const data = {
+            email: email,
+            productId: id,
+        };
+        const requestOptions = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        };
+        fetch(url, requestOptions)
+            .then((response) => {
+                console.log(response);
 
-  let productInfo =
-    <div>
-      <h1>{title}</h1>
-      <div>category: {category}</div>
-      <div>{description}</div>
-      <div>price: {price}</div>
-      <div>Discount Percentage: {discountPercentage}</div>
-      <div>rating: {rating}</div>
-      <div>products in stock: {stock}</div>
-      <div>brand: {brand}</div>
-      <br></br>
-    </div>
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+
+    const {
+        title,
+        description,
+        price,
+        discountPercentage,
+        rating,
+        stock,
+        brand,
+        category,
+        thumbnail,
+        images,
+    } = product;
+    let productInfo = (
+        <div>
+            <h1>{title}</h1>
+            <div>category: {category}</div>
+            <div>{description}</div>
+            <div>price: {price}</div>
+            <div>Discount Percentage: {discountPercentage}</div>
+            <div>rating: {rating}</div>
+            <div>products in stock: {stock}</div>
+            <div>brand: {brand}</div>
+            <br></br>
+        </div>
+    );
 
     const saveProductToRedux = () => {
-      dispatch(saveProduct1(product));
-      console.log('redux product1:',product1);
-      
+        dispatch(saveProduct1(product));
+        console.log('redux product1:', product1);
     }
-    
-  return (
-    <>
-      <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: '80px' }}> {productInfo} </div>
-        <img src={thumbnail}></img>
-      </div>
-      <Link to="/cart">
-        <IconButton color="primary" aria-label="add to shopping cart">
-          <AddShoppingCartIcon />
-        </IconButton>
-      </Link>
-      <Link to={`/categories/${category}`} ><button onClick={() => saveProductToRedux()}>compare to other product</button></Link>
-    </>
-  )
-}    
+
+    return (
+        <>
+            <div style={{ display: 'flex' }}>
+                <div style={{ marginRight: '80px' }}> {productInfo} </div>
+                <img src={thumbnail}></img>
+            </div>
+            <IconButton
+                onClick={() => addToCart(id)}
+                color="primary"
+                aria-label="add to shopping cart"
+            >
+                <AddShoppingCartIcon />
+            </IconButton>
+            <Link to={`/categories/${category}`} ><button onClick={() => saveProductToRedux()}>compare to other product</button></Link>
+        </>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

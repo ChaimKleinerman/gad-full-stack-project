@@ -2,11 +2,13 @@ import BasicCard from "./Card";
 import { Product } from "../typse/typse";
 import { Box } from "@mui/material";
 import { Stack } from "@mui/joy";
-import { BrowserRouter as Route, Link, useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { saveProduct1, saveProduct2 } from "../redux/projectsSlice";
 import { emptyProduct } from "./helperFuncsForCompare/helperFuncsForCompare";
 import { checkProductId } from "./helperFuncsForCompare/helperFuncsForCompare";   
+
 
 interface Props {
   products: Product[];
@@ -24,8 +26,9 @@ export default function ProductsCategory({
   const dispatch = useAppDispatch();
   
   let flag = checkProductId();
+
   // let myLink = '';
-  // flag ? myLink = "/compare" : myLink = `/product/${product.id}`;
+  // myLink = flag === true ? '1' : '2'
 
   const saveProd2InRedux = (chosenProduct: Product) => {
     if (product1.id !== 0) {
@@ -54,7 +57,6 @@ export default function ProductsCategory({
       );
     }
     else if (flag === true) {
-      console.log(flag);
       return (
         <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
           {products.map((product) =>
@@ -67,6 +69,7 @@ export default function ProductsCategory({
         </Box>
       );
     }
+
   } else {
     const filterSplitNumber = parseInt(filter.split("-")[1]);
     const filterSplitNumber2 = parseInt(filter.split("-")[0]);
@@ -76,9 +79,11 @@ export default function ProductsCategory({
         {products.map((product) =>
           Math.floor(product[filterType]) <= filterSplitNumber &&
           Math.floor(product[filterType]) > filterSplitNumber2 ? (
-            <Stack key={product.id} sx={{ margin: "20px" }}>
-              <BasicCard product={product} />
-            </Stack>
+            // <Link to={`/product/${product.id}`}>
+              <Stack key={product.id} sx={{ margin: "20px" }}>
+                <BasicCard product={product} />
+              </Stack>
+            // {/* </Link> */}
           ) : null
         )}
       </Box>
