@@ -42,6 +42,11 @@ export const ProductsSlice = createSlice({
     reducers: {
         saveProduct1: (state, action: PayloadAction<Product>) => {
             state.product1 = action.payload;
+            if (state.product1.brand === 'string') {
+              console.log('fail'); 
+            }
+            else console.log('succesfull');
+            
         },
         saveProduct2: (state, action: PayloadAction<Product>) => {
             state.product2 = action.payload;
@@ -53,25 +58,3 @@ export const {saveProduct1, saveProduct2} = ProductsSlice.actions;
 export default ProductsSlice.reducer
 
 
-// import { createSlice } from '@reduxjs/toolkit'
-// import type { PayloadAction } from '@reduxjs/toolkit'
-
-// interface projectState {
-//   value: JSX.Element|string
-// }
-
-// const initialState:projectState = { value: 'Please select project' } 
-
-// const projectSlice = createSlice({
-//   name: 'projects',
-//   initialState,
-//   reducers: {
-  
-//     chooseProject(state, action: PayloadAction<JSX.Element>) {
-//       state.value = action.payload
-//     },
-//   },
-// })
-
-// export const {chooseProject} = projectSlice.actions
-// export default projectSlice.reducer

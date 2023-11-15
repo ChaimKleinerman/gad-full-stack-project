@@ -3,12 +3,16 @@ import { BrowserRouter as Route, Link, useParams } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Product } from '../typse/typse';
+import { useAppDispatch } from '../redux/hooks';
+import { useAppSelector } from '../redux/hooks';
+import { saveProduct1 } from '../redux/projectsSlice';
 
 
 export default function ProductPage() {
+  const dispatch = useAppDispatch()
+  const product1 = useAppSelector((state) => state.products.product1);
 
   const { id } = useParams();
-  console.log(id);
 
   const [product, setProduct] = useState<Product>({
     id: 1,
@@ -49,6 +53,12 @@ export default function ProductPage() {
       <div>brand: {brand}</div>
       <br></br>
     </div>
+
+    const saveProductToRedux = () => {
+      dispatch(saveProduct1(product));
+      console.log('redux product1:',product1);
+      
+    }
     
   return (
     <>
@@ -61,6 +71,7 @@ export default function ProductPage() {
           <AddShoppingCartIcon />
         </IconButton>
       </Link>
+      <Link to={`/categories/${category}`} ><button onClick={() => saveProductToRedux()}>compare to other product</button></Link>
     </>
   )
 }    

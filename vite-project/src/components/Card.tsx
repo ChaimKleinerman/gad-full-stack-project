@@ -6,7 +6,7 @@ import { Product } from "../typse/typse";
 
 type Props = {product:Product}
 const generateCard = (product: Props) => {
-  console.log(product.product.brand);
+  // console.log(product.product.brand);
   
   return (
     <Card
