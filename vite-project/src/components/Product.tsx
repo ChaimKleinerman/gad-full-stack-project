@@ -30,7 +30,7 @@ export default function ProductPage() {
             fetch(`http://localhost:3000/api/products/${id}`)
                 .then(data => data.json())
                 .then((myProduct) => {
-                    setProduct(myProduct[0]);
+                    setProduct(myProduct);
                 })
         }
         fetchOneProduct()

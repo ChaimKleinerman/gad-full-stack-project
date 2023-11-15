@@ -26,10 +26,7 @@ export default function ProductsCategory({
   const dispatch = useAppDispatch();
   
   let flag = checkProductId();
-
-  // let myLink = '';
-  // myLink = flag === true ? '1' : '2'
-
+  
   const saveProd2InRedux = (chosenProduct: Product) => {
     if (product1.id !== 0) {
         if (product2.id === 0) {
