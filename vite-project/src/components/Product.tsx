@@ -50,4 +50,4 @@ export default function ProductPage() {
       <br></br>
     </div>
     console.log(brand);
-    
+}
