@@ -39,7 +39,9 @@ export default function SignUp({ flag, setFlag }: SignUpProps) {
             alert("Passwords do not match. Please try again.");
         }
     };
-
+    const handleClickClose = () => {
+        setFlag(false);
+    };
     const handleChangePassword1 = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -53,7 +55,7 @@ export default function SignUp({ flag, setFlag }: SignUpProps) {
     };
 
     return (
-        <Dialog open={flag}>
+        <Dialog open={flag} onClose={handleClickClose}>
             <DialogTitle>Subscribe</DialogTitle>
             <DialogContent>
                 <DialogContentText>

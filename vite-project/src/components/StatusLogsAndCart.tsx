@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   BrowserRouter as Router,
   Routes,
@@ -39,6 +40,52 @@ const StatusLogsAndCart = () => {
           <br />
           <SignIn setFlag={setFlag} />
           <SignUp flag={flag} setFlag={setFlag} />
+=======
+import { BrowserRouter as Router, Routes, Link, Route, useParams } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Button, IconButton } from '@mui/material';
+// import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import SignIn from './mui/SignIn';
+import SignUp from './mui/SignUp';
+
+const StatusLogsAndCart = () => {
+    const [flag, setFlag] = React.useState(false);
+    const [storage, setStorage] = useState(false)
+    const signOut = () => {
+        localStorage.removeItem('email');
+        setStorage(prev => !prev)
+        console.log(localStorage.getItem('email'));
+    }
+    return (
+        <Box sx={containerStyle}>
+            <Link
+                style={iconButtonStyle}
+                to={`/cart`}>
+                <ShoppingCartCheckoutIcon />
+            </Link>
+            {/* <Box>{localStorage.getItem('email') ? */}
+            <Box>{storage ?
+                <Box style={textBoxStyle}>
+                    Hello User
+                    <br />
+                    <SignIn setFlag={setFlag} setStorage={setStorage} />
+                    <SignUp flag={flag} setFlag={setFlag} />
+                </Box>
+                :
+                <Box style={textBoxStyle}>
+                    Hello Guest
+                    <br />
+                    <Button
+                        style={iconButtonStyle}
+                        onClick={() => signOut()}
+                    >Sign out</Button>
+                </Box>}
+            </Box>
+
+
+>>>>>>> 33b6dc601b6993b6a6d144abba90f892284c1214
         </Box>
       </Box>
 
@@ -66,6 +113,15 @@ const containerStyle = {
   background: "#09056a",
 };
 
+<<<<<<< HEAD
+=======
+const iconButtonStyle = {
+    color: 'white',
+    cursor: 'pointer'
+
+};
+
+>>>>>>> 33b6dc601b6993b6a6d144abba90f892284c1214
 const textBoxStyle = {
   fontFamily: "Arial, sans-serif",
   fontSize: "16px",
