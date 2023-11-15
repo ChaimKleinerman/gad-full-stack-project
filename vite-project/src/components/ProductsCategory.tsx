@@ -22,8 +22,8 @@ export default function ProductsCategory({
       <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
         {products.map((product) =>
           product.brand === filter || filter === "" ? (
-            <Link to={`/product/${product.id}`}>
-              <Stack key={product.id} sx={{ margin: "20px" }}>
+            <Link key={product.id} to={`/product/${product.id}`}>
+              <Stack sx={{ margin: "20px" }}>
                 <BasicCard product={product} />
               </Stack>
             </Link>
@@ -40,8 +40,8 @@ export default function ProductsCategory({
         {products.map((product) =>
           Math.floor(product[filterType]) <= filterSplitNumber &&
             Math.floor(product[filterType]) > filterSplitNumber2 ? (
-            <Link to={`/product/${product.id}`}>
-              <Stack key={product.id} sx={{ margin: "20px" }}>
+            <Link key={product.id} to={`/product/${product.id}`}>
+              <Stack  sx={{ margin: "20px" }}>
                 <BasicCard product={product} />
               </Stack>
             </Link>

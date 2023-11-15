@@ -41,7 +41,7 @@ export default function Prod5() {
                                     alignItems: 'center',
                                     justifyContent: 'space-evenly'
                                 }}
-                                to={`/products`}>
+                                to={`/product/${categori.id}`}>
                                 {categori.title}
                             </Link> : null
                     })
