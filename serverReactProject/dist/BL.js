@@ -1,5 +1,5 @@
 //modules
-import { dal_allData, dal_dataById, dal_dataByCategory, dal_allCategories, dal_insertUser, dal_login, dal_addToCart, dal_getCart } from "./dal.js";
+import { dal_allData, dal_dataById, dal_dataByCategory, dal_allCategories, dal_insertUser, dal_login, dal_addToCart, dal_getCart, dal_updateCart } from "./dal.js";
 import { Err } from "./types.js";
 import jwt from "jsonwebtoken";
 //get all products
@@ -64,9 +64,9 @@ const bl_login = async (req) => {
 };
 //add to cart
 const bl_addToCart = async (req) => {
-    const user_email = req.body.user_id;
-    const product_id = req.body.product_id;
-    const action = req.body.action;
+    console.log('get in to bl', req.body);
+    const user_email = req.body.email;
+    const product_id = req.body.productId;
     if (!user_email)
         throw new Err(400, "didn't get user id");
     if (!product_id)
@@ -76,10 +76,25 @@ const bl_addToCart = async (req) => {
 };
 //get cart
 const bl_getCart = async (req) => {
-    const user_id = req.body.user_id;
-    if (!user_id)
+    const user_email = req.body.email;
+    console.log('get in to bl', user_email);
+    if (!user_email)
         throw new Err(400, "didn't get user id");
-    const dal_respond = await dal_getCart(user_id);
+    const dal_respond = await dal_getCart(user_email);
     return dal_respond;
 };
-export { bl_allData, bl_dataById, bl_dataByCategory, bl_allCategories, bl_insertUser, bl_login, bl_addToCart, bl_getCart };
+//update cart 
+const bl_updateCart = async (req) => {
+    const user_email = req.body.user_id;
+    const product_id = req.body.product_id;
+    const action = req.body.action;
+    if (!user_email)
+        throw new Err(400, "didn't get user id");
+    if (!product_id)
+        throw new Err(400, "didn't get product id");
+    if (!action)
+        throw new Err(400, "didn't get quantity");
+    const dal_respond = await dal_updateCart(user_email, product_id, action);
+    return dal_respond;
+};
+export { bl_allData, bl_dataById, bl_dataByCategory, bl_allCategories, bl_insertUser, bl_login, bl_addToCart, bl_getCart, bl_updateCart };

@@ -7,7 +7,8 @@ import {
     dal_insertUser,
     dal_login,
     dal_addToCart,
-    dal_getCart
+    dal_getCart,
+    dal_updateCart
 } from "./dal.js";
 import {  } from "./types.js";
 import { Request, Response } from "express";
@@ -81,9 +82,9 @@ const bl_login = async (req: Request) => {
 
 //add to cart
 const bl_addToCart = async (req: Request) => {
-    const user_email = req.body.user_id;
-    const product_id = req.body.product_id;
-    const action = req.body.action;
+    console.log('get in to bl',req.body);
+    const user_email = req.body.email;
+    const product_id = req.body.productId;
     if (!user_email) throw new Err(400, "didn't get user id");
     if (!product_id) throw new Err(400, "didn't get product id");
     const dal_respond = await dal_addToCart(user_email, product_id);
@@ -92,12 +93,26 @@ const bl_addToCart = async (req: Request) => {
 
 //get cart
 const bl_getCart = async (req: Request) => {
-    const user_id = req.body.user_id;
-    if (!user_id) throw new Err(400, "didn't get user id"); 
-    const dal_respond = await dal_getCart(user_id);
+   
+    
+    const user_email = req.body.email;
+    console.log('get in to bl',user_email);
+    
+    if (!user_email) throw new Err(400, "didn't get user id"); 
+    const dal_respond = await dal_getCart(user_email);
     return dal_respond;
 }
-
+//update cart 
+const bl_updateCart = async (req: Request) => {
+    const user_email = req.body.user_id;
+    const product_id = req.body.product_id;
+    const action = req.body.action;
+    if (!user_email) throw new Err(400, "didn't get user id"); 
+    if (!product_id) throw new Err(400, "didn't get product id"); 
+    if (!action) throw new Err(400, "didn't get quantity"); 
+    const dal_respond = await dal_updateCart(user_email,product_id,action);
+    return dal_respond;
+}
 
 
 
@@ -109,5 +124,6 @@ export {
     bl_insertUser,
     bl_login,
     bl_addToCart,
- bl_getCart    
+ bl_getCart,
+ bl_updateCart  
 };

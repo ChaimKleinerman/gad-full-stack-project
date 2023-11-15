@@ -1,6 +1,6 @@
 //modules
 import { authenticationToken } from "./authentication.js";
-import { controller_allData, controller_dataById, controller_allCategories, controller_dataByCategory, controller_userRegister, controller_login, controller_addToCart, controller_getCart, } from "./controller.js";
+import { controller_allData, controller_dataById, controller_allCategories, controller_dataByCategory, controller_userRegister, controller_login, controller_addToCart, controller_getCart, controller_updateCart, } from "./controller.js";
 import express from "express";
 const router = express.Router();
 //get all products
@@ -18,7 +18,9 @@ router.put("/products/category", controller_dataByCategory);
 //add to cart
 router.put("/cart", controller_addToCart);
 //get cart
-router.get("/cart", controller_getCart);
+router.put("/cart/get", controller_getCart);
+//add, remover and delete from cart
+router.put("/cart/update", controller_updateCart);
 //limited by token
 router.use(authenticationToken);
 export { router };

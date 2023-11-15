@@ -12,6 +12,7 @@ import {
     bl_login,
     bl_addToCart,
     bl_getCart,
+    bl_updateCart,
 } from "./BL.js";
 
 // Configure environment variables
@@ -101,9 +102,13 @@ const controller_login = async (req: Request, res: Response) => {
 //add to cart
 const controller_addToCart = async (req: Request, res: Response) => {
     try {
+        console.log('get in to controler',req.body);
+        
         const data = await bl_addToCart(req);
         res.send(data);
     } catch (err) {
+        console.log('get in to controler',req.body);
+
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }
@@ -112,7 +117,22 @@ const controller_addToCart = async (req: Request, res: Response) => {
 //get cart
 const controller_getCart = async (req: Request, res: Response) => {
     try {
+        console.log('get in to controler',req.body);
+        
         const data = await bl_getCart(req);
+        res.send(data);
+    } catch (err) {
+        console.log('ERROR AT CONTROLLER');
+        
+        if (err instanceof Err) {
+            res.status(err.code).send(err.message);
+        }
+    }
+}
+//update cart
+ const controller_updateCart = async (req: Request, res: Response) => {
+    try {
+        const data = await bl_updateCart(req);
         res.send(data);
     } catch (err) {
         if (err instanceof Err) {
@@ -131,4 +151,5 @@ export {
     controller_login,
     controller_addToCart,
     controller_getCart,
+    controller_updateCart,
 };

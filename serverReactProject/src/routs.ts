@@ -9,6 +9,7 @@ import {
     controller_login,
     controller_addToCart,
     controller_getCart,
+    controller_updateCart,
 
 } from "./controller.js";
 import express from "express";
@@ -30,7 +31,9 @@ router.put("/products/category", controller_dataByCategory)
 //add to cart
 router.put("/cart", controller_addToCart);
 //get cart
-router.get("/cart", controller_getCart);
+router.put("/cart/get", controller_getCart);
+//add, remover and delete from cart
+router.put("/cart/update", controller_updateCart);
 
 //limited by token
 

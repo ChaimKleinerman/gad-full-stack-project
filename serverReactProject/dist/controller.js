@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { Err } from "./types.js";
-import { bl_dataById, bl_allData, bl_allCategories, bl_dataByCategory, bl_insertUser, bl_login, bl_addToCart, bl_getCart, } from "./BL.js";
+import { bl_dataById, bl_allData, bl_allCategories, bl_dataByCategory, bl_insertUser, bl_login, bl_addToCart, bl_getCart, bl_updateCart, } from "./BL.js";
 // Configure environment variables
 dotenv.config();
 // Controller to get all trips
@@ -82,10 +82,12 @@ const controller_login = async (req, res) => {
 //add to cart
 const controller_addToCart = async (req, res) => {
     try {
+        console.log('get in to controler', req.body);
         const data = await bl_addToCart(req);
         res.send(data);
     }
     catch (err) {
+        console.log('get in to controler', req.body);
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }
@@ -94,7 +96,21 @@ const controller_addToCart = async (req, res) => {
 //get cart
 const controller_getCart = async (req, res) => {
     try {
+        console.log('get in to controler', req.body);
         const data = await bl_getCart(req);
+        res.send(data);
+    }
+    catch (err) {
+        console.log('ERROR AT CONTROLLER');
+        if (err instanceof Err) {
+            res.status(err.code).send(err.message);
+        }
+    }
+};
+//update cart
+const controller_updateCart = async (req, res) => {
+    try {
+        const data = await bl_updateCart(req);
         res.send(data);
     }
     catch (err) {
@@ -104,4 +120,4 @@ const controller_getCart = async (req, res) => {
     }
 };
 // Export the controllers
-export { controller_allData, controller_dataById, controller_allCategories, controller_dataByCategory, controller_userRegister, controller_login, controller_addToCart, controller_getCart, };
+export { controller_allData, controller_dataById, controller_allCategories, controller_dataByCategory, controller_userRegister, controller_login, controller_addToCart, controller_getCart, controller_updateCart, };
