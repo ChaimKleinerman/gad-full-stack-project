@@ -1,7 +1,6 @@
 //modules
 import { dal_allData, dal_dataById, dal_dataByCategory, dal_allCategories, dal_insertUser, dal_login, dal_addToCart, dal_getCart, dal_updateCart } from "./dal.js";
 import { Err } from "./types.js";
-import jwt from "jsonwebtoken";
 //get all products
 async function bl_allData() {
     const dataJson = await dal_allData();
@@ -56,12 +55,17 @@ const bl_login = async (req) => {
     if (!userPassword)
         throw new Err(400, "didn't get user password");
     const dal_respond = await dal_login(userEmail, userPassword);
-    if (dal_respond) {
-        if (!process.env.ACCESS_TOKEN_SECRET)
-            throw new Err(500, "problem with getting token");
-        const accessToken = jwt.sign(userPassword, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30s" });
-        return accessToken;
-    }
+    return dal_respond;
+    // if (dal_respond) {
+    //     if (!process.env.ACCESS_TOKEN_SECRET)
+    //         throw new Err(500, "problem with getting token");
+    //     const accessToken = jwt.sign(
+    //         userPassword,
+    //         process.env.ACCESS_TOKEN_SECRET,
+    //         { expiresIn: "30s" }
+    //     );
+    //     return accessToken;
+    // }
 };
 //add to cart
 const bl_addToCart = async (req) => {

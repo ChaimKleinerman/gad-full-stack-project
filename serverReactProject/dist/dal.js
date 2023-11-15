@@ -63,7 +63,7 @@ async function dal_insertUser(email, password) {
 //user login
 const dal_login = async (email, password) => {
     console.log('get req dal', email, password);
-    const user = UserModel.findOne({ email: email, password: password });
+    const user = await UserModel.findOne({ email: email, password: password }).exec();
     if (!user)
         throw new Err(400, "user is not exist");
     return "user exist";

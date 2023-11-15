@@ -8,7 +8,7 @@ router.get("/products", controller_allData);
 //user register
 router.post("/register", controller_userRegister);
 //user login
-router.post("login", controller_login);
+router.post("/login", controller_login);
 //get all categories
 router.get("/categories", controller_allCategories);
 //get product by id

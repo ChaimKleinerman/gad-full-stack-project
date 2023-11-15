@@ -69,14 +69,16 @@ const controller_userRegister = async (req, res) => {
 const controller_login = async (req, res) => {
     try {
         console.log('get in to controler', req.body); // For debugging purposes
-        const token = await bl_login(req);
-        res.send(token);
+        const result = await bl_login(req);
+        res.send(result);
     }
     catch (err) {
-        console.log('get in to controler', req.body); // For debugging purposes
+        console.error('Error in controller_login:', err); // For debugging purposes
         if (err instanceof Err) {
-            res.status(err.code).send(err.message);
+            return res.status(err.code).send(err.message);
         }
+        ;
+        return res.status(500).send("Internal Server Error");
     }
 };
 //add to cart
