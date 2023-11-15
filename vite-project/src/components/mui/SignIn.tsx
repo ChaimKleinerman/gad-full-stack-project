@@ -44,9 +44,9 @@ export default function SignIn({ setFlag }: Props) {
 
     return (
         <React.Fragment>
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <div style={linkStyle} onClick={handleClickOpen}>
                 Sign In
-            </Button>
+            </div>
 
             <Dialog open={open} onClose={() => {}}>
                 <DialogTitle>Connect</DialogTitle>
@@ -94,3 +94,9 @@ export default function SignIn({ setFlag }: Props) {
         </React.Fragment>
     );
 }
+
+const linkStyle = {
+    textDecoration: "underline",
+    color: "white",
+    padding: "5px",
+  };

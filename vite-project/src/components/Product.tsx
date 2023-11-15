@@ -3,6 +3,7 @@ import { BrowserRouter as Route, Link, useParams } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Product } from '../typse/typse';
+
 export default function ProductPage() {
   const { id } = useParams();
   console.log(id);
