@@ -4,12 +4,9 @@ import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Product } from '../typse/typse';
 
-
 export default function ProductPage() {
-
   const { id } = useParams();
   console.log(id);
-
   const [product, setProduct] = useState<Product>({
     id: 1,
     title: 'The Amazing SanDisk',
@@ -28,15 +25,12 @@ export default function ProductPage() {
       fetch(`http://localhost:3000/api/products/${id}`)
         .then(data => data.json())
         .then((myProduct) => {
-            console.log(myProduct)
-          setProduct(myProduct);
+          setProduct(myProduct[0]);
         })
     }
     fetchOneProduct()
   }, [])
-
   const { title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, images } = product;
-
   let productInfo =
     <div>
       <h1>{title}</h1>
@@ -49,5 +43,17 @@ export default function ProductPage() {
       <div>brand: {brand}</div>
       <br></br>
     </div>
-    console.log(brand);
-    
+  return (
+    <>
+      <div style={{ display: 'flex' }}>
+        <div style={{ marginRight: '80px' }}> {productInfo} </div>
+        <button><img src={thumbnail}></img></button>
+      </div>
+      <Link to="/cart">
+        <IconButton color="primary" aria-label="add to shopping cart">
+          <AddShoppingCartIcon />
+        </IconButton>
+      </Link>
+    </>
+  )
+}

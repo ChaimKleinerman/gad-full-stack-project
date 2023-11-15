@@ -7,12 +7,14 @@ import {
 } from "react-router-dom";
 import React from "react";
 import { IconButton } from "@mui/material";
-// import Link from '@mui/material/Link';
 import Box from "@mui/material/Box";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import SignIn from "./mui/SignIn";
+import SignUp from "./mui/SignUp";
 import HomeIcon from "@mui/icons-material/Home";
 
 const StatusLogsAndCart = () => {
+  const [flag, setFlag] = React.useState(false);
   return (
     <Box sx={containerStyle}>
       <Box>
@@ -23,11 +25,11 @@ const StatusLogsAndCart = () => {
         <Box style={textBoxStyle}>
           Hello Guest
           <br />
-          <Link to={``} style={linkStyle}>
-            Login
-          </Link>
+          <SignIn setFlag={setFlag} />
+          <SignUp flag={flag} setFlag={setFlag} />
         </Box>
       </Box>
+
       <Box>
         <Link style={iconButtonStyle} to={`/`}>
           <HomeIcon fontSize="large" />
@@ -41,10 +43,10 @@ const containerStyle = {
   display: "flex",
   alignItems: "stretch",
   flexDirection: "row",
+  justifyContent: "space-between",
   textAlign: "center",
   padding: "20px",
   background: "#09056a",
-  justifyContent:"space-between"
 };
 
 const iconButtonStyle = {
