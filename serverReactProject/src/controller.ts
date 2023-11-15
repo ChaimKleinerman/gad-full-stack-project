@@ -85,8 +85,9 @@ const controller_userRegister = async (req: Request, res: Response) => {
 
 // Controller for user login
 const controller_login = async (req: Request, res: Response) => {
+
     try {
-        console.log('get in to controler', req.body, 'pass'); // For debugging purposes
+        console.log('get in to controler', req.body); // For debugging purposes
         const result = await bl_login(req);
         res.send(result);
     } catch (err) {
