@@ -110,20 +110,3 @@ export default function ProductPage() {
     )
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -16,10 +16,7 @@ export default function ComparePage() {
     return (
         <>
         <h1>compare page</h1>
-        {/* <div>{product1.title}</div>
-        <div>{product1.description}</div>
-        <div>2{product2.title}</div>
-        <div>2{product2.description}</div> */}
+
 
 <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
