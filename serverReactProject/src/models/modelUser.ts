@@ -2,10 +2,13 @@
 import mongoose from "mongoose";
 const {Schema,model}  = mongoose
 
+
 const userSchema = new Schema(
     {
        email:String,
-       password:String
+       password:String,
+       cart:[{product_id:String,quantity:Number}]
+
     }
 )
 

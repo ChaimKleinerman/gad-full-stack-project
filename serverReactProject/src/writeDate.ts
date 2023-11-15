@@ -619,19 +619,19 @@ const writeData = async (data:Data) => {
 writeData(data)
 
 
-const writeToCategories = async (data: Data) => {
-    for (let i = 0; i < data.products.length; i++) {
-        const categoryExists = await CategoryModel.findOne({ name: data.products[i].category });
-        if (!categoryExists) {
-            const newCategory = new CategoryModel({
-                name: data.products[i].category,
-                timeChosen: 0,
-            });
-            const result = await newCategory.save();
-            if (!result) throw new Err(500, "the insert has failed");
-            console.log(result);
-        }
-    }
-};
-writeToCategories(data);
+// const writeToCategories = async (data: Data) => {
+//     for (let i = 0; i < data.products.length; i++) {
+//         const categoryExists = await CategoryModel.findOne({ name: data.products[i].category });
+//         if (!categoryExists) {
+//             const newCategory = new CategoryModel({
+//                 name: data.products[i].category,
+//                 timeChosen: 0,
+//             });
+//             const result = await newCategory.save();
+//             if (!result) throw new Err(500, "the insert has failed");
+//             console.log(result);
+//         }
+//     }
+// };
+// writeToCategories(data);
 
