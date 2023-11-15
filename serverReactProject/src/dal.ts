@@ -51,10 +51,18 @@ const dal_dataByCategory = async (category: string) => {
 
 //gat data by id
 async function dal_dataById(id: string) {
-    const dataById = await productModel.findById(id).exec();
+    console.log('get into dal');
+    
+    const dataById = await productModel.find({id:id}).exec();
+    console.log(dataById);
+    
     if (!dataById) {
+        console.log('didnt get data');
+        
         throw { code: 42231, massage: "data not found" };
     }
+    console.log("this is data by id",dataById);
+    
     return dataById;
 }
 

@@ -11,6 +11,7 @@ async function bl_allData() {
 //get product by id
 async function bl_dataById(req) {
     let { id } = req.params;
+    console.log('this id', id);
     if (!id) {
         throw new Err(422, "didn't get id! this is what i got " + id);
     }

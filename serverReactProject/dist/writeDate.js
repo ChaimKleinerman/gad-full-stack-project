@@ -1,4 +1,5 @@
 import { connectToDb } from "./app.js";
+import { productModel } from "./models/modelProduct.js";
 import { Err } from "./types.js";
 import { CategoryModel } from "./models/modelCategories.js";
 //connection
@@ -560,23 +561,23 @@ const data = {
     skip: 0,
     limit: 30,
 };
-// const remove = (data:Data) => {
-//     for (let i = 0; i < data.products.length; i++) {
-//         delete data.products[i].images; // Remove the 'images' property
-//         data.products[i].times_chosen = 0; // Add the 'times_chosen' property
-//     }
-// };
-// remove(data);
-// console.log(data); // Outputs the modified data
-// const writeData = async (data:Data) => {
-//     for (let i = 0; i < data.products.length; i++) {
-//         const newTrip = new productModel({...data.products[i]})
-//         const result = await newTrip.save()
-//         if(!result)
-//        throw new Err (500,'the insert been felid')
-//     }
-// }
-// writeData(data)
+const remove = (data) => {
+    for (let i = 0; i < data.products.length; i++) {
+        delete data.products[i].images; // Remove the 'images' property
+        data.products[i].times_chosen = 0; // Add the 'times_chosen' property
+    }
+};
+remove(data);
+console.log(data); // Outputs the modified data
+const writeData = async (data) => {
+    for (let i = 0; i < data.products.length; i++) {
+        const newTrip = new productModel({ ...data.products[i] });
+        const result = await newTrip.save();
+        if (!result)
+            throw new Err(500, 'the insert been felid');
+    }
+};
+writeData(data);
 const writeToCategories = async (data) => {
     for (let i = 0; i < data.products.length; i++) {
         const categoryExists = await CategoryModel.findOne({ name: data.products[i].category });
