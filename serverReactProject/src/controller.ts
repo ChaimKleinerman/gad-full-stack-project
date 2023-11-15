@@ -32,13 +32,13 @@ const controller_allData = async (req: Request, res: Response) => {
 // Controller to get data by ID
 const controller_dataById = async (req: Request, res: Response) => {
     try {
-        console.log(1,req.params);
-        
+        console.log(1, req.params);
+
         const user_id = await bl_dataById(req);
         res.send(user_id);
     } catch (err) {
-        console.log(1,req.params);
-        
+        console.log(1, req.params);
+
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }
@@ -63,8 +63,8 @@ const controller_dataByCategory = async (req: Request, res: Response) => {
         const data = await bl_dataByCategory(req)
         res.send(data);
     } catch (err) {
-        console.log(1,req.body);
-                
+        console.log(1, req.body);
+
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }
@@ -86,28 +86,27 @@ const controller_userRegister = async (req: Request, res: Response) => {
 // Controller for user login
 const controller_login = async (req: Request, res: Response) => {
     try {
-        console.log('get in to controler',req.body); // For debugging purposes
-        
-        const token = await bl_login(req);
-        res.send(token);
+        console.log('get in to controler', req.body, 'pass'); // For debugging purposes
+        const result = await bl_login(req);
+        res.send(result);
     } catch (err) {
-        console.log('get in to controler',req.body); // For debugging purposes
-        
+        console.error('Error in controller_login:', err); // For debugging purposes
         if (err instanceof Err) {
-            res.status(err.code).send(err.message);
-        }
+            return res.status(err.code).send(err.message);
+        };
+        return res.status(500).send("Internal Server Error");
     }
 };
 
 //add to cart
 const controller_addToCart = async (req: Request, res: Response) => {
     try {
-        console.log('get in to controler',req.body);
-        
+        console.log('get in to controler', req.body);
+
         const data = await bl_addToCart(req);
         res.send(data);
     } catch (err) {
-        console.log('get in to controler',req.body);
+        console.log('get in to controler', req.body);
 
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
@@ -117,20 +116,20 @@ const controller_addToCart = async (req: Request, res: Response) => {
 //get cart
 const controller_getCart = async (req: Request, res: Response) => {
     try {
-        console.log('get in to controler',req.body);
-        
+        console.log('get in to controler', req.body);
+
         const data = await bl_getCart(req);
         res.send(data);
     } catch (err) {
         console.log('ERROR AT CONTROLLER');
-        
+
         if (err instanceof Err) {
             res.status(err.code).send(err.message);
         }
     }
 }
 //update cart
- const controller_updateCart = async (req: Request, res: Response) => {
+const controller_updateCart = async (req: Request, res: Response) => {
     try {
         const data = await bl_updateCart(req);
         res.send(data);
