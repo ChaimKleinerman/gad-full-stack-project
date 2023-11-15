@@ -55,7 +55,7 @@ export default function SignIn({ setFlag, setStorage }: Props) {
             <Button
                 sx={{ color: '#ffffff', cursor: 'pointer' }}
 
-                onClick={handleClickOpen}>
+                onClick={handleClickOpen}/>
             <div style={linkStyle} onClick={handleClickOpen}>
                 Sign In
             </div>
