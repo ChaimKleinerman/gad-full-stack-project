@@ -8,7 +8,12 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useAppDispatch } from "../../redux/hooks";
 import { Link } from "@mui/material";
+import { saveProduct1, rialCount } from "../../redux/projectsSlice";
+
+
+
 interface Props {
     setFlag: React.Dispatch<React.SetStateAction<boolean>>;
     setStorage: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +21,7 @@ interface Props {
 export default function SignIn({ setFlag, setStorage }: Props) {
     const { register, handleSubmit } = useForm();
     const [open, setOpen] = React.useState(false);
+    const dispatch = useAppDispatch()
     const handleClose = async (dataLog: any) => {
         console.log('data:', dataLog);
         try {
@@ -26,6 +32,7 @@ export default function SignIn({ setFlag, setStorage }: Props) {
                 setStorage(prev => !prev);
                 console.log('Login success', response.data);
                 const email = localStorage.getItem("email");
+                // dispatch(r)
                 console.log(email);
                 setOpen(false);
             } else {
@@ -47,7 +54,7 @@ export default function SignIn({ setFlag, setStorage }: Props) {
         <React.Fragment>
             <Button
                 sx={{ color: '#FFFFFF', cursor: 'pointer' }}
-                onClick={handleClickOpen}/>
+                onClick={handleClickOpen} />
             <div style={linkStyle} onClick={handleClickOpen}>
                 Sign In
             </div>
@@ -107,4 +114,4 @@ const linkStyle = {
     textDecoration: "underline",
     color: "white",
     padding: "5px",
-  };
+};

@@ -4,7 +4,8 @@ import { Product } from '../typse/typse';
 
 interface ProductState {
   product1: Product,
-  product2: Product
+  product2: Product,
+  count: number
 }
 
 const initialState: ProductState = {
@@ -33,28 +34,39 @@ const initialState: ProductState = {
     category: 'string',
     thumbnail: 'string',
     images: ['']
-  }
+  },
+  count: 0
 }
 
 export const ProductsSlice = createSlice({
-    name: 'myProduct',
-    initialState,
-    reducers: {
-        saveProduct1: (state, action: PayloadAction<Product>) => {
-            state.product1 = action.payload;
-            if (state.product1.brand === 'string') {
-              console.log('fail'); 
-            }
-            else console.log('succesfull');
-            
-        },
-        saveProduct2: (state, action: PayloadAction<Product>) => {
-            state.product2 = action.payload;
-        }
-    }
+  name: 'myProduct',
+  initialState,
+  reducers: {
+    saveProduct1: (state, action: PayloadAction<Product>) => {
+      state.product1 = action.payload;
+      if (state.product1.brand === 'string') {
+        console.log('fail');
+      }
+      else console.log('succesfull');
+
+    },
+    saveProduct2: (state, action: PayloadAction<Product>) => {
+      state.product2 = action.payload;
+    },
+    rialCount: (state, action: PayloadAction<number>) => {
+      state.count = action.payload;
+    },
+    addCount: (state) => {
+      state.count += 1;
+    },
+    reduceCount: (state) => {
+      state.count > 1 ?
+        state.count -= 1 : state.count = 0
+    },
+  }
 })
 
-export const {saveProduct1, saveProduct2} = ProductsSlice.actions;
+export const { saveProduct1, saveProduct2, addCount, reduceCount, rialCount } = ProductsSlice.actions;
 export default ProductsSlice.reducer
 
 

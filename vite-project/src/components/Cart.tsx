@@ -1,168 +1,163 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Storage } from "../storage";
+// import { Product } from '../typse/typse';
+import { useAppDispatch } from '../redux/hooks';
+import { useAppSelector } from '../redux/hooks';
+import { saveProduct1, addCount, reduceCount } from '../redux/projectsSlice';
 
-import BasicCard from "./Card";
-
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+  quantity?: number
+  // Add other properties as needed
+}
 export default function Cart() {
-  const [allCart, setallCart] = useState([]);
+  const dispatch = useAppDispatch()
 
+  const [allCart, setallCart] = useState<any[]>([]); // Adjust type if possible
+  const email = localStorage.getItem("email");
+  console.log('kkkkkkkkkkkk', allCart[0]);
+
+  function getData() {
+
+    if (Storage()) {
+      const data = localStorage.getItem('cart');
+      console.log('qwertyuicart:', data);
+
+      const parsedData = data ? JSON.parse(data) : [];
+      setallCart([parsedData]);
+      console.log('ertyuiallCart', parsedData);
+    }
+    else {
+      const url = "http://localhost:3000/api/cart/get";
+      const data = {
+        email: email,
+      };
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      fetch(url, requestOptions)
+        .then((response) => {
+          console.log(response);
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Request failed!");
+        })
+        .then((data) => {
+          console.log("PUT request succeeded with data:", data);
+          setallCart(data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  }
   useEffect(() => {
-    const email = localStorage.getItem("email");
-    const url = "http://localhost:3000/api/cart/get";
-    const data = {
-      email: email,
-    };
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    fetch(url, requestOptions)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Request failed!");
-      })
-      .then((data) => {
-        console.log("PUT request succeeded with data:", data);
-        setallCart(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    getData();
   }, []);
-
   const editCart = async (productId: number | null, action: string) => {
-    const url = "http://localhost:3000/api/cart";
-    const data = {
-      email,
-      productId,
-      action,
-    };
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
+    if (Storage()) {
+      const cartString = localStorage.getItem('cart');
+      const cart = cartString ? JSON.parse(cartString) : [];
 
-    fetch(url, requestOptions)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
+      const existingProductIndex = cart.findIndex((item: Product) => item.id === productId);
+
+      if (existingProductIndex !== -1) {
+        // Product is in the cart
+        if (action === '+') {
+          cart[existingProductIndex].quantity += 1;
+        } else if (action === '-') {
+          cart[existingProductIndex].quantity -= 1;
+        } else if (action === 'remove') {
+          cart.splice(existingProductIndex, 1);
+        } else if (action === 'delete') {
+          localStorage.removeItem('cart');
+          setallCart([]);
+          return;
         }
-        throw new Error("Request failed!");
-      })
-      .then((data) => {
-        console.log("PUT request succeeded with data:", data);
-        setallCart(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
 
+        localStorage.setItem('cart', JSON.stringify(cart));
+        setallCart([cart]);
+      }
+    } else {
+
+      const url = "http://localhost:3000/api/cart/update";
+      const data = {
+        email,
+        productId,
+        action,
+      };
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      fetch(url, requestOptions)
+        .then((response) => {
+          if (response.ok) {
+            getData();
+          }
+          throw new Error("Request failed!");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  };
   return (
     <Box>
       <Typography variant="h3">Cart</Typography>
-      <Stack
-        spacing={0}
-        sx={{ display: "flex", flexWrap: "wrap", flexDirection: "row",}}
-      >
-        {allCart.map((Product) => (
-          <Stack key={Product.id}>
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                flexDirection: "column",
-                margin: "10px"
-              }}
-            >
-              <BasicCard product={Product} />
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "500px",
+      <Stack spacing={2}>
+        {allCart[0] &&
+          allCart[0].map((product: Product, index: number) => (
+            <Stack key={product.id}>
+              {product.title} - ${product.price} - Quantity:
+              {Storage() ? product.quantity : allCart[1][index]}
+              <img src={product.thumbnail} loading="lazy" alt="" />
+              <Button
+                onClick={() => {
+                  editCart(product.id, "remove");
                 }}
               >
-                <Button
-                  onClick={() => {
-                    editCart(Product.id, "remove");
-                  }}
-                  sx={{
-                    fontWeight: "bold",
-                    "&:hover": { fontWeight: "bold" },
-                    "&:focus": { fontWeight: "bold" },
-                    border: "2px solid", // הוסף מסגרת
-                    borderColor: "primary.main", // צבע המסגרת
-                    borderRadius: "5px", // רדיוס הפינות
-                    padding: "5px 10px", // גודל המסגרת
-                  }}
-                >
-                  Remove from Cart
-                </Button>
-                <Button
-                  onClick={() => {
-                    editCart(Product.id, "+");
-                  }}
-                  sx={{
-                    fontWeight: "bold",
-                    "&:hover": { fontWeight: "bold" },
-                    "&:focus": { fontWeight: "bold" },
-                    border: "2px solid",
-                    borderColor: "primary.main",
-                    borderRadius: "5px",
-                    padding: "5px 10px",
-                  }}
-                >
-                  +
-                </Button>
-                <Button
-                  onClick={() => {
-                    editCart(Product.id, "-");
-                  }}
-                  sx={{
-                    fontWeight: "bold",
-                    "&:hover": { fontWeight: "bold" },
-                    "&:focus": { fontWeight: "bold" },
-                    border: "2px solid",
-                    borderColor: "primary.main",
-                    borderRadius: "5px",
-                    padding: "5px 10px",
-                  }}
-                >
-                  -
-                </Button>
-              </Box>
-            </Box>
-          </Stack>
-        ))}
+                Remove from Cart
+              </Button>
+              <Button
+                onClick={() => {
+                  dispatch(addCount());
+                  editCart(product.id, "+");
+                }}
+              >
+                +
+              </Button>
+              <Button
+                onClick={() => {
+                  dispatch(reduceCount());
+
+                  editCart(product.id, "-");
+                }}
+              >
+                -
+              </Button>
+              <Button
+                onClick={() => {
+                  editCart(product.id, "delete");
+                }}
+              >
+                Clear Cart
+              </Button>
+            </Stack>
+          ))}
       </Stack>
-      <Button
-        onClick={() => editCart(null, "delete")}
-        sx={{
-          fontWeight: "bold",
-          "&:hover": { fontWeight: "bold" },
-          "&:focus": { fontWeight: "bold" },
-          border: "2px solid",
-          borderColor: "primary.main",
-          borderRadius: "5px",
-          padding: "5px 10px",
-        }}
-      >
-        Clear Cart
-      </Button>
     </Box>
   );
 }
-
-
-
-

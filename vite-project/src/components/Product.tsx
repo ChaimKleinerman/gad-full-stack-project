@@ -7,7 +7,10 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Product } from '../typse/typse';
 import { useAppDispatch } from '../redux/hooks';
 import { useAppSelector } from '../redux/hooks';
-import { saveProduct1 } from '../redux/projectsSlice';
+import { saveProduct1, addCount, reduceCount } from '../redux/projectsSlice';
+import { Storage } from "../storage";
+// import { useAppDispatch } from '../redux/hooks';
+
 
 export default function ProductPage() {
     const dispatch = useAppDispatch()
@@ -39,29 +42,56 @@ export default function ProductPage() {
     }, [])
 
     const addToCart = async (id: string | undefined) => {
-        const email = localStorage.getItem("email");
+        if (Storage()) {
+            // Local storage is available
+            const cartString = localStorage.getItem('cart');
+            console.log('cartString', cartString);
 
-        const url = "http://localhost:3000/api/cart";
-        const data = {
-            email: email,
-            productId: id,
-        };
-        const requestOptions = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        };
-        fetch(url, requestOptions)
-            .then((response) => {
-                console.log(response);
+            const cart = cartString ? JSON.parse(cartString) : [];
+            console.log('cccccccccccc', cart);
 
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    };
+            // Check if the product is already in the cart
+            const existingProductIndex = cart.findIndex((item: Product) => item.id === product.id);
+
+            if (existingProductIndex !== -1) {
+                // Product is already in the cart, update quantity
+                const updatedCart = [...cart];
+                updatedCart[existingProductIndex].quantity += 1;
+
+                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                console.log(updatedCart, 'qwertyuiop');
+            } else {
+                // Product is not in the cart, add it with quantity 1
+                const updatedCart = [...cart, { ...product, quantity: 1 }];
+                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                console.log(updatedCart, 'qwertyuiop');
+            }
+        }
+        else {
+            const email = localStorage.getItem("email");
+
+            const url = "http://localhost:3000/api/cart";
+            const data = {
+                email: email,
+                productId: id,
+            };
+            const requestOptions = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            };
+            fetch(url, requestOptions)
+                .then((response) => {
+                    console.log(response);
+
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        };
+    }
 
     const {
         title,
@@ -95,17 +125,17 @@ export default function ProductPage() {
     }
 
     return (
-        <>  
+        <>
             <Link to={`/categories/${category}`} >
-                <Button variant="outlined">{`back to ${category}`}</Button>    
+                <Button variant="outlined">{`back to ${category}`}</Button>
             </Link>
-            
+
             <div style={{ display: 'flex' }}>
                 <div style={{ marginRight: '80px' }}> {productInfo} </div>
                 <img src={thumbnail}></img>
             </div>
             <IconButton
-                onClick={() => addToCart(id)}
+                onClick={() => { addToCart(id); dispatch(addCount()) }}
                 color="primary"
                 aria-label="add to shopping cart"
             >
@@ -113,9 +143,9 @@ export default function ProductPage() {
             </IconButton>
             {/* <Link to={`/categories/${category}`} ><button onClick={() => saveProductToRedux()}>compare to other product</button></Link> */}
             <Link to={`/categories/${category}`} >
-                <Button variant="outlined" onClick={() => saveProductToRedux()}>compare to other product</Button>    
+                <Button variant="outlined" onClick={() => saveProductToRedux()}>compare to other product</Button>
             </Link>
-            
+
         </>
-            )
-        }
+    )
+}
