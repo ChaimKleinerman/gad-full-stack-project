@@ -44,7 +44,8 @@ const StatusLogsAndCart = () => {
         </Link>
       </Box>
       {/* <Box>{localStorage.getItem('email') ? */}
-      <Box>{Storage() ?
+      <Box>
+        {Storage() ?
         <Box style={textBoxStyle}>
           Hello Guest
           <br />

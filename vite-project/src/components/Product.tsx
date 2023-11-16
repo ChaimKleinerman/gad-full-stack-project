@@ -164,7 +164,7 @@ export default function ProductPage() {
             <Link to={`/categories/${category}`} >
                 <Button variant="outlined" onClick={() => saveProductToRedux()}>compare to other product</Button>    
             </Link>
-            <div><MapComponent coordinate1={coordinate1} coordinate2={coordinate2} /></div>
+            <div><MapComponent coordinate1={coordinate1} coordinate2={coordinate2} coordinate3={coordinate3} coordinate4={coordinate4}/></div>
         </>
             )
         }
