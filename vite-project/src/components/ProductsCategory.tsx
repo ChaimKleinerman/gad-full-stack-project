@@ -3,19 +3,15 @@ import { Product } from "../typse/typse";
 import { Box } from "@mui/material";
 import { Stack } from "@mui/joy";
 import { Link } from "react-router-dom";
-
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { saveProduct1, saveProduct2 } from "../redux/projectsSlice";
 import { emptyProduct } from "./helperFuncsForCompare/helperFuncsForCompare";
 import { checkProductId } from "./helperFuncsForCompare/helperFuncsForCompare";
-
-
 interface Props {
   products: Product[];
   filter: string;
   filterType: "brand" | "price" | "rating" | "discountPercentage";
 }
-
 export default function ProductsCategory({
   products,
   filter,
@@ -24,9 +20,7 @@ export default function ProductsCategory({
   const product1 = useAppSelector((state) => state.products.product1);
   const product2 = useAppSelector((state) => state.products.product2);
   const dispatch = useAppDispatch();
-
   let flag = checkProductId();
-
   const saveProd2InRedux = (chosenProduct: Product) => {
     if (product1.id !== 0) {
       if (product2.id === 0) {
@@ -54,9 +48,11 @@ export default function ProductsCategory({
       );
     }
     else {
+        console.log('this is filter type at condition 3',filter)
+
       const filterSplitNumber = parseInt(filter.split("-")[1]);
       const filterSplitNumber2 = parseInt(filter.split("-")[0]);
-
+      
       return (
         <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
           {products.map((product) =>
@@ -107,5 +103,8 @@ export default function ProductsCategory({
         </Box>
       );
     }
-    }
+  }
 }
+
+
+

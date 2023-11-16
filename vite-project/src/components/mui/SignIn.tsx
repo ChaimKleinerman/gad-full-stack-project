@@ -46,7 +46,8 @@ export default function SignIn({ setFlag, setStorage }: Props) {
     return (
         <React.Fragment>
             <Button
-                sx={{ color: '#FFFFFF', cursor: 'pointer' }}
+                sx={{ color: '#ffffff', cursor: 'pointer' }}
+
                 onClick={handleClickOpen}/>
             <div style={linkStyle} onClick={handleClickOpen}>
                 Sign In

@@ -68,7 +68,6 @@ export default function Cart() {
       });
   };
   return (
-    <>
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Typography
         variant="h3"
@@ -78,7 +77,7 @@ export default function Cart() {
       </Typography>
       {allCart[0] &&
         allCart[0].map((product: Product, index: number) => (
-          <Grid
+          <><Grid
             key={product.id}
             container
             spacing={2}
@@ -129,20 +128,20 @@ export default function Cart() {
                   <DeleteIcon />
                 </IconButton>
               </Box>
-              <Button
+            </Grid>
+          </Grid>
+          <Button
             onClick={() => {
               editCart(product.id, "delete");
-            }}
+            } }
           >
               Clear Cart
-            </Button>
-            </Grid>
-          </Grid>  
+            </Button></>
         ))}
     </Box>
-    </>
   );
 }
+
 
 
 
