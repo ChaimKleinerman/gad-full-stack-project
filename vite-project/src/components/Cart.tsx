@@ -1,4 +1,5 @@
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Typography, Button, Grid, IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect, useState } from "react";
 import { Storage } from "../storage";
 // import { Product } from '../typse/typse';
@@ -19,7 +20,6 @@ export default function Cart() {
 
   const [allCart, setallCart] = useState<any[]>([]); // Adjust type if possible
   const email = localStorage.getItem("email");
-  console.log('kkkkkkkkkkkk', allCart[0]);
 
   function getData() {
 
@@ -64,6 +64,7 @@ export default function Cart() {
     getData();
   }, []);
   const editCart = async (productId: number | null, action: string) => {
+
     if (Storage()) {
       const cartString = localStorage.getItem('cart');
       const cart = cartString ? JSON.parse(cartString) : [];
