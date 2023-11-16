@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
 import Categories from "../components/Categories";
 import Product from "../components/Product";
+import ComparePage from "../components/comparePage";
 import Cart from "../components/Cart";
 import StatusLogsAndCart from "../components/StatusLogsAndCart";
 import Categories5 from "../components/homePage/Categories5";
@@ -38,6 +39,16 @@ export default function Routs() {
                 <>
                     <StatusLogsAndCart />
                     <Product />
+                </>
+            ),
+            errorElement: <ErrorPage />,
+        },
+        {
+            path: "/compare",
+            element: (
+                <>
+                    <StatusLogsAndCart />
+                    <ComparePage />
                 </>
             ),
             errorElement: <ErrorPage />,

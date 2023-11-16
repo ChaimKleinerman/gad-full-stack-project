@@ -1,41 +1,43 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Route, Link, useParams } from "react-router-dom";
-import IconButton from "@mui/material/IconButton";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Product } from "../typse/typse";
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Route, Link, useParams } from 'react-router-dom';
+// import { Button } from '@mui/base';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Product } from '../typse/typse';
+import { useAppDispatch } from '../redux/hooks';
+import { useAppSelector } from '../redux/hooks';
+import { saveProduct1 } from '../redux/projectsSlice';
+import MapComponent from './maps/MapLyer';
 
 export default function ProductPage() {
-    const { id } = useParams();
+    const dispatch = useAppDispatch()
+    const product1 = useAppSelector((state) => state.products.product1);
 
-    console.log(id);
+    const { id } = useParams();
     const [product, setProduct] = useState<Product>({
         id: 1,
-        title: "The Amazing SanDisk",
-        description:
-            "The amazing sandisk is really amazing. Buy it now so I will get all your money oops I said it loud",
+        title: 'The Amazing SanDisk',
+        description: 'The amazing sandisk is really amazing.',
         price: 1000,
         discountPercentage: 1,
         rating: 1,
         stock: 1,
-        brand: "string",
-        category: "string",
-        thumbnail: "string",
-        images: [
-            "https://m.media-amazon.com/images/I/61H7b1hylLL._AC_UF1000,1000_QL80_.jpg",
-        ],
+        brand: 'string',
+        category: 'string',
+        thumbnail: 'string',
+        images: [''],
     });
     useEffect(() => {
         const fetchOneProduct = () => {
             fetch(`http://localhost:3000/api/products/${id}`)
-                .then((data) => data.json())
+                .then(data => data.json())
                 .then((myProduct) => {
                     setProduct(myProduct);
-                });
-        };
-        fetchOneProduct();
-    }, []);
-
-
+                })
+        }
+        fetchOneProduct()
+    }, [])
 
     const addToCart = async (id: string | undefined) => {
         const email = localStorage.getItem("email");
@@ -55,13 +57,12 @@ export default function ProductPage() {
         fetch(url, requestOptions)
             .then((response) => {
                 console.log(response);
-            
+
             })
             .catch((error) => {
                 console.error("Error:", error);
             });
     };
-   
 
     const {
         title,
@@ -88,15 +89,22 @@ export default function ProductPage() {
             <br></br>
         </div>
     );
+
+    const saveProductToRedux = () => {
+        dispatch(saveProduct1(product));
+        console.log('redux product1:', product1);
+    }
+
     return (
-        <>
-            <div style={{ display: "flex" }}>
-                <div style={{ marginRight: "80px" }}> {productInfo} </div>
-                <button>
-                    <img src={thumbnail}></img>
-                </button>
+        <>  
+            <Link to={`/categories/${category}`} >
+                <Button variant="outlined">{`back to ${category}`}</Button>    
+            </Link>
+            
+            <div style={{ display: 'flex' }}>
+                <div style={{ marginRight: '80px' }}> {productInfo} </div>
+                <img src={thumbnail}></img>
             </div>
-            {/* <Link to="/cart"> */}
             <IconButton
                 onClick={() => addToCart(id)}
                 color="primary"
@@ -104,7 +112,11 @@ export default function ProductPage() {
             >
                 <AddShoppingCartIcon />
             </IconButton>
-            {/* </Link> */}
+            {/* <Link to={`/categories/${category}`} ><button onClick={() => saveProductToRedux()}>compare to other product</button></Link> */}
+            <Link to={`/categories/${category}`} >
+                <Button variant="outlined" onClick={() => saveProductToRedux()}>compare to other product</Button>    
+            </Link>
+            <MapComponent />
         </>
-    );
-}
+            )
+        }

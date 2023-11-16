@@ -9,23 +9,18 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link } from "@mui/material";
-
 interface Props {
     setFlag: React.Dispatch<React.SetStateAction<boolean>>;
     setStorage: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 export default function SignIn({ setFlag, setStorage }: Props) {
     const { register, handleSubmit } = useForm();
     const [open, setOpen] = React.useState(false);
-
     const handleClose = async (dataLog: any) => {
         console.log('data:', dataLog);
-
         try {
             const response = await axios.post("http://localhost:3000/api/login", dataLog);
             // console.log(response, 'qwertyuytretyuiuytrew');
-
             if (response.status === 200) {
                 localStorage.setItem("email", dataLog.email);
                 setStorage(prev => !prev);
@@ -45,11 +40,9 @@ export default function SignIn({ setFlag, setStorage }: Props) {
     const handleClickClose = () => {
         setOpen(false);
     };
-
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     return (
         <React.Fragment>
             <Button
@@ -59,7 +52,6 @@ export default function SignIn({ setFlag, setStorage }: Props) {
             <div style={linkStyle} onClick={handleClickOpen}>
                 Sign In
             </div>
-
             <Dialog open={open} onClose={handleClickClose}>
                 <DialogTitle>Connect</DialogTitle>
                 <DialogContent>
@@ -112,7 +104,6 @@ export default function SignIn({ setFlag, setStorage }: Props) {
         </React.Fragment>
     );
 }
-
 const linkStyle = {
     textDecoration: "underline",
     color: "white",

@@ -5,7 +5,7 @@ import ProductsCategory from "./ProductsCategory";
 
 export default function Categories() {
     const { category } = useParams();
-    console.log(category);
+    console.log('this is category ',category);
     const [filter, setFilter] = useState<string>('')
     const [filterType, setFilterType] = useState<"brand" | "price" | "rating" | "discountPercentage">('brand')
     const [products, setProducts] = useState([]);
