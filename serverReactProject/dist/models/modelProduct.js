@@ -11,7 +11,13 @@ const productSchema = new Schema({
     brand: String,
     category: String,
     thumbnail: String,
-    times_chosen: String
+    times_chosen: String,
+    coordinates: {
+        latitude: Number,
+        longitude: Number,
+        latitude2: Number,
+        longitude2: Number,
+    },
 });
 //hwy there is no need to use mongoose
 const productModel = model('products', productSchema);

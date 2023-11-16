@@ -1,18 +1,24 @@
 interface Product {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    images?: string[];
-    times_chosen?: number,
-    cart?: boolean
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images?: string[];
+  times_chosen?: number,
+  coordinates?: {
+      latitude: number;
+      longitude: number;
+      latitude2: number;
+      longitude2: number;
+  };
 }
+
 
 interface Data {
     products: Product[];

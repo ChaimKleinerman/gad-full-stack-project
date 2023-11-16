@@ -6,7 +6,8 @@ import morgan from "morgan";
 import cors from "cors";
 //create connection to mongoDb
 export async function connectToDb() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/ecommerceData");
+    await mongoose.connect("mongodb+srv://chaim:1234@cluster0.tbqoqjo.mongodb.net/store?retryWrites=true&w=majority");
+    //    await mongoose.connect("mongodb://127.0.0.1:27017/ecommerceData")
 }
 //middlewares
 const app = express();
