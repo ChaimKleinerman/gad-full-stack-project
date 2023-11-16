@@ -6,14 +6,13 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import HomeIcon from '@mui/icons-material/Home'; // Import HomeIcon
 import SignIn from './mui/SignIn';
 import SignUp from './mui/SignUp';
-
 import { useAppSelector } from '../redux/hooks';
 import { Storage } from "../storage";
 
 
 const StatusLogsAndCart = () => {
 
-  const count = useAppSelector((state) => state.products.count)
+  // const count = useAppSelector((state) => state.products.count)
   const [flag, setFlag] = React.useState(false);
   const [storage, setStorage] = useState(true);
   // const [countProducts, setCountProducts] = useState(4)
@@ -44,8 +43,7 @@ const StatusLogsAndCart = () => {
         </Link>
       </Box>
       {/* <Box>{localStorage.getItem('email') ? */}
-      <Box>
-        {Storage() ?
+      <Box>{Storage() ?
         <Box style={textBoxStyle}>
           Hello Guest
           <br />

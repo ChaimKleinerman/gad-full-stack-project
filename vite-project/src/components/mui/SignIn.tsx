@@ -8,9 +8,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useAppDispatch } from "../../redux/hooks";
-import { Link } from "@mui/material";
-import { saveProduct1, rialCount } from "../../redux/projectsSlice";
+// import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+// import { Link } from "@mui/material";
+// import { saveProduct1, rialCount } from "../../redux/projectsSlice";
+// import { userCount } from "../../storage";
+import { useState } from "react";
 
 
 
@@ -18,22 +20,38 @@ interface Props {
     setFlag: React.Dispatch<React.SetStateAction<boolean>>;
     setStorage: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 export default function SignIn({ setFlag, setStorage }: Props) {
+    // const sum = 0
+    // const count = useAppSelector((state) => state.products.count);
+
     const { register, handleSubmit } = useForm();
-    const [open, setOpen] = React.useState(false);
-    const dispatch = useAppDispatch()
+    const [open, setOpen] = useState(false);
+    // const [countProducts, setCountProducts] = useState([])
+    // console.log(countProducts);
+    // console.log(countProducts.length);
+
+    // const dispatch = useAppDispatch()
+
     const handleClose = async (dataLog: any) => {
         console.log('data:', dataLog);
         try {
             const response = await axios.post("http://localhost:3000/api/login", dataLog);
-            // console.log(response, 'qwertyuytretyuiuytrew');
             if (response.status === 200) {
                 localStorage.setItem("email", dataLog.email);
                 setStorage(prev => !prev);
                 console.log('Login success', response.data);
-                const email = localStorage.getItem("email");
-                // dispatch(r)
-                console.log(email);
+                // const email = localStorage.getItem("email");
+                // userCount()
+                // .then(data => data.json())
+                // .then(data => setCountProducts(data));
+                // for (const iterator of countProducts) {
+                //     sum += iterator.price
+                // }
+                // const countData = await userCount();
+                // setCountProducts(countData);
+                // dispatch(rialCount(count))
+                // console.log('count', count);
                 setOpen(false);
             } else {
                 alert(`Unexpected response status: ${response.status} `);
@@ -53,9 +71,8 @@ export default function SignIn({ setFlag, setStorage }: Props) {
     return (
         <React.Fragment>
             <Button
-                sx={{ color: '#ffffff', cursor: 'pointer' }}
-
-                onClick={handleClickOpen}/>
+                sx={{ color: '#FFFFFF', cursor: 'pointer' }}
+                onClick={handleClickOpen} />
 
             <div style={linkStyle} onClick={handleClickOpen}>
                 Sign In

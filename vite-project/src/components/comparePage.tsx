@@ -66,14 +66,10 @@ export default function ComparePage() {
                         >
                             <TableCell align='left'></TableCell>
                             <TableCell align='left'>
-                                <Paper elevation={3} sx={{ width: '200px', height: '150px' }}>
-                                    <img src={product1.thumbnail} alt='product image' style={{ width: '200px', height: '150px' }} />
-                                </Paper>
+                                <img src={product1.thumbnail} alt='product image' style={{ width: '200px', height: '150px' }} />
                             </TableCell>
                             <TableCell align='left'>
-                            <Paper elevation={4} sx={{ width: '200px', height: '150px' }}>
                                 <img src={product2.thumbnail} alt='product image' style={{ width: '200px', height: '150px' }} />
-                            </Paper>
                             </TableCell>
                         </TableRow>
                         <TableRow
