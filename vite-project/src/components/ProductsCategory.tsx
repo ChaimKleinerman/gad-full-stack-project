@@ -39,27 +39,14 @@ export default function ProductsCategory({
     }
   }
 
-  if (filterType === "brand") {
-    if (flag === false) {
+  if (flag === false) {
+    if (filterType === "brand") {
       return (
         <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
           {products.map((product) =>
             product.brand === filter || filter === "" ? (
               <div onClick={() => { saveProd2InRedux(product) }}><Stack key={product.id} sx={{ margin: "20px" }}>
                 <Link to={`/product/${product.id}`}><BasicCard product={product} /></Link>
-              </Stack></div>
-            ) : null
-          )}
-        </Box>
-      );
-    }
-    else if (flag === true) {
-      return (
-        <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-          {products.map((product) =>
-            product.brand === filter || filter === "" ? (
-              <div onClick={() => { saveProd2InRedux(product) }}><Stack key={product.id} sx={{ margin: "20px" }}>
-                <Link to='/compare'><BasicCard product={product} /></Link>
               </Stack></div>
             ) : null
           )}
@@ -86,4 +73,39 @@ export default function ProductsCategory({
       );
     }
   }
+
+  else if (flag === true) {
+    if (filterType === "brand") {
+      return (
+        <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+          {products.map((product) =>
+            product.brand === filter || filter === "" ? (
+              <div onClick={() => { saveProd2InRedux(product) }}><Stack key={product.id} sx={{ margin: "20px" }}>
+                <Link to={`/compare`}><BasicCard product={product} /></Link>
+              </Stack></div>
+            ) : null
+          )}
+        </Box>
+      );
+    }
+    else {
+      const filterSplitNumber = parseInt(filter.split("-")[1]);
+      const filterSplitNumber2 = parseInt(filter.split("-")[0]);
+
+      return (
+        <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+          {products.map((product) =>
+            Math.floor(product[filterType]) <= filterSplitNumber &&
+              Math.floor(product[filterType]) > filterSplitNumber2 ? (
+              <Link key={product.id} to={`/compare`}>
+                <Stack sx={{ margin: "20px" }}>
+                  <BasicCard product={product} />
+                </Stack>
+              </Link>
+            ) : null
+          )}
+        </Box>
+      );
+    }
+    }
 }
