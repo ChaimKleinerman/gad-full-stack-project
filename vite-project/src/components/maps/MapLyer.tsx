@@ -55,7 +55,7 @@ function MapComponent() {
             source: vectorSource,
             style: new Style({
                 image: new Icon({
-                    src: "react.svg",
+                    src: "Pin.svg",
                     width: 30,
                     height: 30,
                 }),
@@ -63,6 +63,9 @@ function MapComponent() {
         });
 
         map.addLayer(vectorLayer);
+
+        map.setTarget(mapTargetElement.current || "");
+        setMap(map);
 
         map.on("click", (e) => {
             console.log('the click works');
