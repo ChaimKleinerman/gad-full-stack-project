@@ -10,6 +10,10 @@ export type Product = {
     category: string;
     thumbnail: string;
     images: string[];
+    coordinates?: {
+        latitude: number;
+        longitude: number;
+    };
 };
 
 
