@@ -7,15 +7,18 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Product } from '../typse/typse';
 import { useAppDispatch } from '../redux/hooks';
 import { useAppSelector } from '../redux/hooks';
-import MapComponent from './maps/MapLyer';
+import MapComponent from './MapsComponents/MapComponent';
 import { saveProduct1, addCount, reduceCount } from '../redux/projectsSlice';
 import { Storage } from "../storage";
-// import { useAppDispatch } from '../redux/hooks';
 
 
 export default function ProductPage() {
     const dispatch = useAppDispatch()
     const product1 = useAppSelector((state) => state.products.product1);
+    const [coordinate1, setCoordinateSet] = useState(1)
+    const [coordinate2, setCoordinateSet2] = useState(1)
+    const [coordinate3, setCoordinateSet3] = useState(1)
+    const [coordinate4, setCoordinateSet4] = useState(1)
 
     const { id } = useParams();
     const [product, setProduct] = useState<Product>({
@@ -29,18 +32,31 @@ export default function ProductPage() {
         brand: 'string',
         category: 'string',
         thumbnail: 'string',
-        images: [''],
+        images: [],
+        coordinates:{
+            latitude: 1,
+            longitude: 1,
+          }
     });
     useEffect(() => {
         const fetchOneProduct = () => {
             fetch(`http://localhost:3000/api/products/${id}`)
                 .then(data => data.json())
                 .then((myProduct) => {
-                    setProduct(myProduct);
+                    setProduct(myProduct)
+                    const foo = myProduct.coordinates.latitude;
+                    setCoordinateSet(myProduct.coordinates.latitude)
+                    setCoordinateSet2(myProduct.coordinates.longitude)
+                    setCoordinateSet3(myProduct.coordinates.latitude2)
+                    setCoordinateSet4(myProduct.coordinates.longitude2)
+                    console.log('this state',coordinate1);
+                    
+                    
+                    
                 })
         }
         fetchOneProduct()
-    }, [])
+    }, [coordinate1, coordinate2])
 
     const addToCart = async (id: string | undefined) => {
         if (Storage()) {
@@ -71,21 +87,21 @@ export default function ProductPage() {
         else {
             const email = localStorage.getItem("email");
 
-            const url = "http://localhost:3000/api/cart";
-            const data = {
-                email: email,
-                productId: id,
-            };
-            const requestOptions = {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            };
-            fetch(url, requestOptions)
-                .then((response) => {
-                    console.log(response);
+        const url = "http://localhost:3000/api/cart";
+        const data = {
+            email: email,
+            productId: id,
+        };
+        const requestOptions = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        };
+        fetch(url, requestOptions)
+            .then((response) => {
+                console.log(response);
 
                 })
                 .catch((error) => {
@@ -104,7 +120,7 @@ export default function ProductPage() {
         brand,
         category,
         thumbnail,
-        images,
+        coordinates,
     } = product;
     let productInfo = (
         <div>
@@ -126,17 +142,19 @@ export default function ProductPage() {
     }
 
     return (
-        <>
+        <>  
             <Link to={`/categories/${category}`} >
-                <Button variant="outlined">{`back to ${category}`}</Button>
+                <Button variant="outlined">{`back to ${category}`}</Button>    
             </Link>
-
+            
             <div style={{ display: 'flex' }}>
-                <div style={{ marginRight: '80px' }}> {productInfo} </div>
+                <div style={{ marginRight: '90px' }}> {productInfo} </div>
                 <img src={thumbnail}></img>
             </div>
+
+            
             <IconButton
-                onClick={() => { addToCart(id); dispatch(addCount()) }}
+                onClick={() => addToCart(id)}
                 color="primary"
                 aria-label="add to shopping cart"
             >
@@ -144,9 +162,9 @@ export default function ProductPage() {
             </IconButton>
             {/* <Link to={`/categories/${category}`} ><button onClick={() => saveProductToRedux()}>compare to other product</button></Link> */}
             <Link to={`/categories/${category}`} >
-                <Button variant="outlined" onClick={() => saveProductToRedux()}>compare to other product</Button>
+                <Button variant="outlined" onClick={() => saveProductToRedux()}>compare to other product</Button>    
             </Link>
-
+            <div><MapComponent coordinate1={coordinate1} coordinate2={coordinate2} coordinate3={coordinate3} coordinate4={coordinate4}/></div>
         </>
-    )
-}
+            )
+        }
