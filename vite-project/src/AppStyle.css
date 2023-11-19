@@ -1,0 +1,23 @@
+.no-border {
+  border: none;
+}
+
+#root {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+}
+
+.tableRowHover:hover {
+  /* background-color: lightgray;  */
+  font-weight: 'bold';
+  cursor: pointer;
+}
+
+.hover-text:hover {
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+}
