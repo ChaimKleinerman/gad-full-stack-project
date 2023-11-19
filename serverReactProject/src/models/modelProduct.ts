@@ -15,7 +15,7 @@ const productSchema = new Schema({
   brand: String,
   category: String,
   thumbnail: String,
-  times_chosen: String,
+  times_chosen: Number,
   coordinates: {
       latitude: Number,
       longitude: Number,

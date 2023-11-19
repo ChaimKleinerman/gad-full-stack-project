@@ -10,7 +10,7 @@ connectToDb();
 
 //gat all products
 const dal_allData = async () => {
-    const data = await productModel.find({}).sort({ "timeChosen": -1 }).exec();
+    const data = await productModel.find({}).sort({ "times_chosen": -1 }).exec();
     if (!data) {
         throw new Err(500, "the get all been filed");
     }
@@ -53,16 +53,18 @@ const dal_dataByCategory = async (category: string) => {
 
 //gat data by id
 async function dal_dataById(id: string) {
+    console.log('get req dal real one');
     const dataById = await productModel.findOne({ id: id }).exec();
-    console.log(dataById);
-
+    const idInit = parseInt(id);
+    const incrementChosenProduct = await productModel.findOneAndUpdate(
+        { id: id },
+        { $inc: { times_chosen: 1 } }
+    )
+    console.log('req incrementChosenProduct',incrementChosenProduct);
     if (!dataById) {
         console.log('didnt get data');
-        
         throw { code: 42231, massage: "data not found" };
     }
-    console.log("this is data by id",dataById);
-    
     return dataById;
 }
 
