@@ -1,4 +1,5 @@
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { addCount } from "../redux/projectsSlice";
 import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -14,6 +15,7 @@ import Paper from '@mui/material/Paper';
 
 
 export default function ComparePage() {
+    const dispatch = useAppDispatch();
     const product1 = useAppSelector((state) => state.products.product1);
     const product2 = useAppSelector((state) => state.products.product2);
     let ID1 = product1.id.toString();
@@ -127,7 +129,10 @@ export default function ComparePage() {
                             <TableCell align='left'></TableCell>
                             <TableCell align='left'>
                                 {<IconButton
-                                    onClick={() => addToCart(ID1)}
+                                    onClick={() => {
+                                        addToCart(ID1);
+                                        dispatch(addCount())
+                                    }}
                                     color="primary"
                                     aria-label="add to shopping cart"
                                 >
@@ -136,7 +141,10 @@ export default function ComparePage() {
                             </TableCell>
                             <TableCell align='left'>
                                 {<IconButton
-                                    onClick={() => addToCart(ID2)}
+                                    onClick={() => {
+                                        addToCart(ID2);
+                                        dispatch(addCount())
+                                    }}
                                     color="primary"
                                     aria-label="add to shopping cart"
                                 >

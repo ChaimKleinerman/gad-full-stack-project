@@ -16,6 +16,10 @@ import { Storage } from "../storage";
 export default function ProductPage() {
     const dispatch = useAppDispatch()
     const product1 = useAppSelector((state) => state.products.product1);
+    const [coordinate1, setCoordinateSet] = useState(1)
+    const [coordinate2, setCoordinateSet2] = useState(1)
+    const [coordinate3, setCoordinateSet3] = useState(1)
+    const [coordinate4, setCoordinateSet4] = useState(1)
 
     const { id } = useParams();
     const [product, setProduct] = useState<Product>({
@@ -30,6 +34,10 @@ export default function ProductPage() {
         category: 'string',
         thumbnail: 'string',
         images: [''],
+        coordinates:{
+            latitude: 1,
+            longitude: 1,
+          }
     });
     useEffect(() => {
         const fetchOneProduct = () => {
@@ -37,10 +45,16 @@ export default function ProductPage() {
                 .then(data => data.json())
                 .then((myProduct) => {
                     setProduct(myProduct);
+                    const foo = myProduct.coordinates.latitude;
+                    setCoordinateSet(myProduct.coordinates.latitude)
+                    setCoordinateSet2(myProduct.coordinates.longitude)
+                    setCoordinateSet3(myProduct.coordinates.latitude2)
+                    setCoordinateSet4(myProduct.coordinates.longitude2)
+                    console.log('this state',coordinate1);  
                 })
         }
         fetchOneProduct()
-    }, [])
+    }, [coordinate1, coordinate2]);
 
     const addToCart = async (id: string | undefined) => {
         if (Storage()) {
@@ -92,7 +106,7 @@ export default function ProductPage() {
                     console.error("Error:", error);
                 });
         };
-    }
+    };
 
     const {
         title,
@@ -104,10 +118,10 @@ export default function ProductPage() {
         brand,
         category,
         thumbnail,
-        images,
+        coordinates,
     } = product;
     let productInfo = (
-        <div>
+        <div style={{fontFamily: 'sans-serif'}}>
             <h1>{title}</h1>
             <div>category: {category}</div>
             <div>{description}</div>
@@ -146,6 +160,7 @@ export default function ProductPage() {
             <Link to={`/categories/${category}`} >
                 <Button variant="outlined" onClick={() => saveProductToRedux()}>compare to other product</Button>
             </Link>
+            <div><MapComponent coordinate1={coordinate1} coordinate2={coordinate2} coordinate3={coordinate3} coordinate4={coordinate4}/></div>
 
         </>
     )

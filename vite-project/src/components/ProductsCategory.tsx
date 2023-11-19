@@ -21,6 +21,7 @@ export default function ProductsCategory({
   const product2 = useAppSelector((state) => state.products.product2);
   const dispatch = useAppDispatch();
   let flag = checkProductId();
+
   const saveProd2InRedux = (chosenProduct: Product) => {
     if (product1.id !== 0) {
       if (product2.id === 0) {
@@ -28,35 +29,19 @@ export default function ProductsCategory({
       }
     }
     if (product1.id !== 0 && product2.id !== 0) {
-      dispatch(saveProduct2(emptyProduct))
-      dispatch(saveProduct1(emptyProduct))
+      dispatch(saveProduct2(emptyProduct));
+      dispatch(saveProduct1(emptyProduct));
     }
   }
-  if (filterType === "brand") {
-    if (flag === false) {
-        console.log('this is filter at condition 1',filter);
-        
+
+  if (flag === false) {
+    if (filterType === "brand") {
       return (
         <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
           {products.map((product) =>
             product.brand === filter || filter === "" ? (
               <div onClick={() => { saveProd2InRedux(product) }}><Stack key={product.id} sx={{ margin: "20px" }}>
                 <Link to={`/product/${product.id}`}><BasicCard product={product} /></Link>
-              </Stack></div>
-            ) : null
-          )}
-        </Box>
-      );
-    }
-    else if (flag === true) {
-        console.log('this is filter at condition 2',filter);
-
-      return (
-        <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-          {products.map((product) =>
-            product.brand === filter || filter === "" ? (
-              <div onClick={() => { saveProd2InRedux(product) }}><Stack key={product.id} sx={{ margin: "20px" }}>
-                <Link to='/compare'><BasicCard product={product} /></Link>
               </Stack></div>
             ) : null
           )}
@@ -72,9 +57,44 @@ export default function ProductsCategory({
       return (
         <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
           {products.map((product) =>
-            Math.floor(product.filterType) <= filterSplitNumber &&
-              Math.floor(product.filterType) > filterSplitNumber2 ? (
+            Math.floor(product[filterType]) <= filterSplitNumber &&
+              Math.floor(product[filterType]) > filterSplitNumber2 ? (
               <Link key={product.id} to={`/product/${product.id}`}>
+                <Stack sx={{ margin: "20px" }}>
+                  <BasicCard product={product} />
+                </Stack>
+              </Link>
+            ) : null
+          )}
+        </Box>
+      );
+    }
+  }
+
+  else if (flag === true) {
+    if (filterType === "brand") {
+      return (
+        <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+          {products.map((product) =>
+            product.brand === filter || filter === "" ? (
+              <div onClick={() => { saveProd2InRedux(product) }}><Stack key={product.id} sx={{ margin: "20px" }}>
+                <Link to={`/compare`}><BasicCard product={product} /></Link>
+              </Stack></div>
+            ) : null
+          )}
+        </Box>
+      );
+    }
+    else {
+      const filterSplitNumber = parseInt(filter.split("-")[1]);
+      const filterSplitNumber2 = parseInt(filter.split("-")[0]);
+
+      return (
+        <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+          {products.map((product) =>
+            Math.floor(product[filterType]) <= filterSplitNumber &&
+              Math.floor(product[filterType]) > filterSplitNumber2 ? (
+              <Link key={product.id} to={`/compare`}>
                 <Stack sx={{ margin: "20px" }}>
                   <BasicCard product={product} />
                 </Stack>

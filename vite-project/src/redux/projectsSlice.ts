@@ -56,6 +56,9 @@ export const ProductsSlice = createSlice({
     rialCount: (state, action: PayloadAction<number>) => {
       state.count = action.payload;
     },
+    reduceAmountFromCount: (state, action: PayloadAction<number>) => {
+      state.count -= action.payload;
+    },
     addCount: (state) => {
       state.count += 1;
     },
@@ -66,7 +69,7 @@ export const ProductsSlice = createSlice({
   }
 })
 
-export const { saveProduct1, saveProduct2, addCount, reduceCount, rialCount } = ProductsSlice.actions;
+export const { saveProduct1, saveProduct2, rialCount, reduceAmountFromCount, addCount, reduceCount } = ProductsSlice.actions;
 export default ProductsSlice.reducer
 
 
